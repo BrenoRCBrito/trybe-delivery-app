@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { StatusCodes } from 'http-status-codes';
+import postLogin from '../../services';
 
 function LoginForm() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [status, setStatus] = useState();
 
   const validateInputs = () => {
     const regex = /\S+@\S+\.[a-zA-Z]+/;
@@ -21,6 +24,11 @@ function LoginForm() {
 
   const handleInputPassword = ({ target }) => {
     setUserPassword(target.value);
+  };
+
+  const handleStatusLogin = async (event) => {
+    event.preventDefault();
+    setStatus(await postLogin(userEmail, userPassword));
   };
 
   return (
@@ -53,6 +61,7 @@ function LoginForm() {
           type="submit"
           data-testid="common_login__button-login"
           disabled={ validateInputs() }
+          onClick={ (event) => handleStatusLogin(event) }
         >
           LOGIN
         </button>
@@ -65,6 +74,14 @@ function LoginForm() {
         </button>
 
         {/* <span>Usuario não cadastrado!</span> */}
+        { status === StatusCodes.NOT_FOUND
+          && (
+            <span
+              data-testid="common_login__element-invalid-email"
+            >
+              Usuário não encontrado
+            </span>
+          ) }
       </form>
     </div>
   );
