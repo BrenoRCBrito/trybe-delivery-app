@@ -91,7 +91,6 @@ async function register(req, res) {
 async function registerAdmin(req, res) {
   const { name, email, password, role } = req.body;
   const { role: requestedRole } = req.user;
-  console.log(requestedRole);
   if (requestedRole !== 'administrator') {
     return res.status(401).send({ error: 'Unauthorized' });
   }
@@ -195,13 +194,11 @@ async function createSale(req, res) {
     return res.status(401).send({ error: 'Unauthorized' });
   }
   const { products, cart } = req.body;
-  console.log('====>', products, cart, role, userId);
   const { sellerId, totalPrice, deliveryAddress, deliveryNumber } = cart;
   const newSale = await Sale.create({
     userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, status: 'Pendente', 
   });
   const { id: saleId } = newSale;
-  console.log('SALE_ID ===>>', saleId);
   await products.map(async ({ id: productId, quantity }) => {
     const newSaleProduct = await SaleProduct.create({ saleId, productId, quantity });
     return newSaleProduct;
