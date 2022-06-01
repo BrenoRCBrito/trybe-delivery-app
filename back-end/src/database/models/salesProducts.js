@@ -1,7 +1,16 @@
+const { DataTypes } = require("sequelize");
+
+const saleProduct = {
+  quantity: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+};
+
 module.exports = (sequelize) => {
   const defineSalesProducts = sequelize.define(
     "SaleProduct",
-    {},
+    saleProduct,
     {
       timestamps: false,
       tableName: "sales_products",

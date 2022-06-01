@@ -23,6 +23,24 @@ const sale = {
     allowNull: false,
     type: DataTypes.STRING(50),
   },
+  sellerId: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    foreignKey: true,
+    references: {
+      model: "users",
+      key: "id",
+    },
+  },
+  userId: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    foreignKey: true,
+    references: {
+      model: "users",
+      key: "id",
+    },
+  },
 };
 
 module.exports = (sequelize) => {
@@ -34,8 +52,8 @@ module.exports = (sequelize) => {
   });
 
   defineSale.associate = (models) => {
-    defineSale.belongsTo(models.User, { foreignKey: "id", as: "userId" });
-    defineSale.belongsTo(models.User, { foreignKey: "id", as: "sellerId" });
+    defineSale.hasOne(models.User, { sourceKey: "userId", foreignKey: "id", as: "user" });
+    defineSale.hasOne(models.User, { sourceKey: "sellerId", foreignKey: "id", as: "seller" });
   };
 
   return defineSale;

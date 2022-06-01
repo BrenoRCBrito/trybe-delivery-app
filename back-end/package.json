@@ -13,6 +13,7 @@
     "start": "node .",
     "dev": "nodemon .",
     "sequelize-helper": "nodemon ./src/api/sequelizeQueryHelper.js",
+    "skeleton": "nodemon ./src/api/skeletonServer.js",
     "test": "mocha src/tests/**/*$NAME*.test.js --exit",
     "test:coverage": "nyc --all npm run test",
     "test:coverage:json": "nyc --all --reporter=json-summary npm run test",
