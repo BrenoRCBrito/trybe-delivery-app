@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusCodes } from 'http-status-codes';
+import { useHistory } from 'react-router-dom';
 
 import postLogin from '../../services';
 import validateInputs from './utils';
@@ -10,6 +11,7 @@ function LoginForm() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [status, setStatus] = useState();
+  const navegate = useHistory();
 
   const handleInputLogin = ({ target }) => {
     setUserEmail(target.value);
@@ -23,6 +25,10 @@ function LoginForm() {
     event.preventDefault();
     setStatus(await postLogin(userEmail, userPassword));
   };
+
+  useEffect(() => {
+    if (typeof status === 'object') return navegate.push('/customer/products');
+  }, [status]);
 
   return (
     <div>
