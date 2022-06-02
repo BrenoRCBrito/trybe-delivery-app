@@ -28,7 +28,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (typeof status === 'object') return goTo.push('/customer/products');
-  }, [status]);
+  }, [status, goTo]);
 
   return (
     <div>
