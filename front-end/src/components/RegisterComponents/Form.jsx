@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { StatusCodes } from 'http-status-codes';
 import { useHistory } from 'react-router-dom';
 
 import inputsDatas from '../utils/inputsDatas';
@@ -65,7 +66,14 @@ function RegisterForm() {
           CADASTRAR
         </button>
 
-        { typeof status !== 'object' && <p>{ status }</p> }
+        { status === StatusCodes.CONFLICT
+          && (
+            <span
+              data-testid="common_register__element-invalid_register"
+            >
+              Usuario já registrado!
+            </span>
+          ) }
       </form>
     </div>
   );
