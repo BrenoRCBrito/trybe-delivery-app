@@ -40,6 +40,13 @@ function RegisterForm() {
           value={ userPassword }
           handler={ handleInputPassword }
         />
+
+        <button
+          type='submit'
+          data-testid='common_register__button-register'
+        >
+          CADASTRAR
+        </button>
       </form>
     </div>
   );
