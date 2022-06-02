@@ -7,6 +7,7 @@
   },
   "engineStrict": true,
   "scripts": {
+    "simple-start": "./misc/simple-start.sh",
     "pm2": "./node_modules/.bin/pm2",
     "jest": "./node_modules/.bin/jest",
     "start": "./scripts/prepare-for-test.sh",
