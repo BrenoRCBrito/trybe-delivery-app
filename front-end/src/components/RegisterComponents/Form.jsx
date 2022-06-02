@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
+import { validateRegister } from '../utils/utils';
 
 function RegisterForm() {
   const [userEmail, setUserEmail] = useState('');
@@ -44,6 +45,7 @@ function RegisterForm() {
         <button
           type="submit"
           data-testid="common_register__button-register"
+          disabled={ validateRegister(userEmail, userName, userPassword) }
         >
           CADASTRAR
         </button>
