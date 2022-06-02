@@ -3,15 +3,15 @@ import { StatusCodes } from 'http-status-codes';
 import { useHistory } from 'react-router-dom';
 
 import postLogin from '../../services';
-import validateInputs from './utils';
-import inputsDatas from './inputsDatas';
+import validateInputs from '../utils/utils';
+import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
 
 function LoginForm() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [status, setStatus] = useState();
-  const navegate = useHistory();
+  const goTo = useHistory();
 
   const handleInputLogin = ({ target }) => {
     setUserEmail(target.value);
@@ -27,7 +27,7 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    if (typeof status === 'object') return navegate.push('/customer/products');
+    if (typeof status === 'object') return goTo.push('/customer/products');
   }, [status]);
 
   return (
@@ -58,6 +58,7 @@ function LoginForm() {
         <button
           type="submit"
           data-testid="common_login__button-register"
+          onClick={ () => goTo.push('/register') }
         >
           Ainda não tenho conta
         </button>
