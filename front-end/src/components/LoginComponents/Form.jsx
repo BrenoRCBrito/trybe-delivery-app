@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
 import { StatusCodes } from 'http-status-codes';
+
 import postLogin from '../../services';
+import validateInputs from './utils';
+import inputsDatas from './inputsDatas';
+import GenericInput from '../GenericInput';
 
 function LoginForm() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [status, setStatus] = useState();
-
-  const validateInputs = () => {
-    const regex = /\S+@\S+\.[a-zA-Z]+/;
-    const validEmail = regex.test(userEmail);
-    const SIX = 6;
-
-    if (validEmail && userPassword.length >= SIX) {
-      return false;
-    }
-    return true;
-  };
 
   const handleInputLogin = ({ target }) => {
     setUserEmail(target.value);
@@ -35,32 +28,22 @@ function LoginForm() {
     <div>
       <img alt="imagem do nosso logo" />
       <form>
-        <label htmlFor="login-id">
-          Login
-          <input
-            id="login-id"
-            placeholder="Digite seu email"
-            data-testid="common_login__input-email"
-            value={ userEmail }
-            onChange={ (event) => handleInputLogin(event) }
-          />
-        </label>
+        <GenericInput
+          data={ inputsDatas.Login }
+          value={ userEmail }
+          handler={ handleInputLogin }
+        />
 
-        <label htmlFor="password-id">
-          Senha
-          <input
-            id="password-id"
-            placeholder="Digite sua senha"
-            data-testid="common_login__input-password"
-            value={ userPassword }
-            onChange={ (event) => handleInputPassword(event) }
-          />
-        </label>
+        <GenericInput
+          data={ inputsDatas.Password }
+          value={ userPassword }
+          handler={ handleInputPassword }
+        />
 
         <button
           type="submit"
           data-testid="common_login__button-login"
-          disabled={ validateInputs() }
+          disabled={ validateInputs(userEmail, userPassword) }
           onClick={ (event) => handleStatusLogin(event) }
         >
           LOGIN
@@ -73,7 +56,6 @@ function LoginForm() {
           Ainda não tenho conta
         </button>
 
-        {/* <span>Usuario não cadastrado!</span> */}
         { status === StatusCodes.NOT_FOUND
           && (
             <span
