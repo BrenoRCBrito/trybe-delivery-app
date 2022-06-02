@@ -9,7 +9,7 @@ async function login(req, res) {
   } = response;
   delete userWithoutPassword.password;
   const token = create(userWithoutPassword);
-  return res.status(200).json({ token });
+  return res.status(200).json({ token, ...userWithoutPassword });
 }
 
 module.exports = login;
