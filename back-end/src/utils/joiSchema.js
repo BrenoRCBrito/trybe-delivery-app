@@ -6,8 +6,9 @@ const formatError = (error) => {
     'string.base': 422,
     'string.email': 422,
     'any.required': 400,
+    'any.only': 422,
   };
-  if (joi.isJoiError(error)) {
+  if (joi.isError(error)) {
     return {
       error: error.message,
       status: status[error.details[0].type],
@@ -17,24 +18,12 @@ const formatError = (error) => {
 };
 
 const loginSchema = joi.object({
-  email: joi.string().email().required().message({
-    'any.required': 'Email is required',
-    'string.email': 'Email is invalid',
-    'string.base': 'Email must be a string',
-  }),
-  password: joi.string().min(6).required().message({
-    'string.base': 'Password must be a string',
-    'string.min': 'Password length must be at least 6 characters long',
-    'any.required': 'Password is required',
-  }),
+  email: joi.string().email().required(),
+  password: joi.string().min(6).required(),
 });
 
 const registerSchema = loginSchema.keys({
-  name: joi.string().min(12).required().message({
-    'string.base': 'Name must be a string',
-    'string.min': 'Name length must be at least 12 characters long',
-    'any.required': 'Name is required',
-  }),
+  name: joi.string().min(12).required(),
 });
 
 const registerAdminSchema = registerSchema.keys({
