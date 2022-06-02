@@ -9,7 +9,7 @@ const registerCustomer = async (req, res) => {
   } = newUser;
   delete newUserWithoutPassword.password;
   const token = await create(newUserWithoutPassword);
-  return res.status(201).json({ token });
+  return res.status(201).json({ token, ...newUserWithoutPassword });
 };
 
 const registerAdmin = async (req, res) => {
