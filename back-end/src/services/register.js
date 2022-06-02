@@ -6,7 +6,6 @@ module.exports = async (name, email, password, role = 'customer') => {
   if (response) {
     const existingUserError = { status: 409, error: 'User already exists' };
     throw existingUserError;
-    // return res.status(409).send({ error: 'User already exists' });
   }
   const newUser = await User.create({
     name,
