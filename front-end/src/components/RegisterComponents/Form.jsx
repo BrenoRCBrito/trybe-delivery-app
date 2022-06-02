@@ -42,8 +42,8 @@ function RegisterForm() {
         />
 
         <button
-          type='submit'
-          data-testid='common_register__button-register'
+          type="submit"
+          data-testid="common_register__button-register"
         >
           CADASTRAR
         </button>
