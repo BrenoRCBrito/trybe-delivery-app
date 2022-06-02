@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StatusCodes } from 'http-status-codes';
 import { useHistory } from 'react-router-dom';
 
-import postLogin from '../../services';
+import { postLogin } from '../../services';
 import validateInputs from '../utils/utils';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
