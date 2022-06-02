@@ -1,4 +1,4 @@
-const validateInputs = (userEmail, userPassword) => {
+const validateLogin = (userEmail, userPassword) => {
   const regex = /\S+@\S+\.[a-zA-Z]+/;
   const validEmail = regex.test(userEmail);
   const SIX = 6;
@@ -9,4 +9,17 @@ const validateInputs = (userEmail, userPassword) => {
   return true;
 };
 
-export default validateInputs;
+const validateRegister = (email, name, password) => {
+  const regex = /\S+@\S+\.[a-zA-Z]+/;
+  const validEmail = regex.test(email);
+  const SIX = 6;
+  const TWELVE = 12;
+
+  if (validEmail && password.length >= SIX && name.length >= TWELVE) {
+    return false;
+  }
+
+  return true;
+};
+
+export { validateLogin, validateRegister };

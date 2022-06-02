@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 import { useHistory } from 'react-router-dom';
 
 import postLogin from '../../services';
-import validateInputs from '../utils/utils';
+import { validateLogin } from '../utils/utils';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
 
@@ -49,7 +49,7 @@ function LoginForm() {
         <button
           type="submit"
           data-testid="common_login__button-login"
-          disabled={ validateInputs(userEmail, userPassword) }
+          disabled={ validateLogin(userEmail, userPassword) }
           onClick={ (event) => handleStatusLogin(event) }
         >
           LOGIN
