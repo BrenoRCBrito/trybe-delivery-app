@@ -6,4 +6,6 @@ const router = Router();
 
 router.patch('/:id', auth, saleController.update);
 
+router.get('', auth, saleController.getSales);
+
 module.exports = router;
