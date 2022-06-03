@@ -8,11 +8,12 @@ import ProductsList from '../../components/ProductsList/ProductsList';
 function CustomerProducts() {
   const { userData, products, setProducts } = useContext(Context);
   console.log(userData);
+  console.log(products);
 
   useEffect(() => {
     getProducts(userData.token)
       .then((response) => {
-        setProducts(response.data);
+        setProducts(response.products);
       })
       .catch((e) => console.log(e));
   }, [setProducts, userData.token]);
