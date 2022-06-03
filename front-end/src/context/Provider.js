@@ -4,10 +4,13 @@ import Context from './Context';
 
 function Provider({ children }) {
   const [userData, setUserData] = useState('');
+  const [products, setProducts] = useState([]);
 
   const context = {
     userData,
     setUserData,
+    products,
+    setProducts,
   };
 
   return (

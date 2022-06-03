@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import Context from '../../context/Context';
+import { getProducts } from '../../services';
 import Navbar from '../../components/Navbar/Navbar';
+import ProductsList from '../../components/ProductsList/ProductsList';
 // import LoginForm from '../../components/LoginComponents/Form';
 
 function CustomerProducts() {
+  const { userData, products, setProducts } = useContext(Context);
+  console.log(userData);
+
+  useEffect(() => {
+    getProducts(userData.token)
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((e) => console.log(e));
+  }, [setProducts, userData.token]);
+
   return (
     <div>
       <Navbar />
+      <ProductsList products={ products } />
     </div>
   );
 }
