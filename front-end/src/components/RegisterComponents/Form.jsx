@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { StatusCodes } from 'http-status-codes';
 import { useHistory } from 'react-router-dom';
 
-import { postLogin } from '../../services';
-import { validateLogin } from '../utils/utils';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
+import { postRegister } from '../../services';
+import { validateRegister } from '../utils/utils';
 
-function LoginForm() {
+function RegisterForm() {
   const [userEmail, setUserEmail] = useState('');
+  const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [status, setStatus] = useState();
+
   const goTo = useHistory();
 
   const handleInputLogin = ({ target }) => {
@@ -21,9 +23,13 @@ function LoginForm() {
     setUserPassword(target.value);
   };
 
+  const handleInputName = ({ target }) => {
+    setUserName(target.value);
+  };
+
   const handleStatusLogin = async (event) => {
     event.preventDefault();
-    setStatus(await postLogin(userEmail, userPassword));
+    setStatus(await postRegister(userEmail, userName, userPassword));
   };
 
   useEffect(() => {
@@ -32,43 +38,40 @@ function LoginForm() {
 
   return (
     <div>
-      <img alt="imagem do nosso logo" />
       <form>
         <GenericInput
-          data={ inputsDatas.Login }
+          data={ inputsDatas.Email }
           value={ userEmail }
           handler={ handleInputLogin }
         />
 
         <GenericInput
-          data={ inputsDatas.Password }
+          data={ inputsDatas.Name }
+          value={ userName }
+          handler={ handleInputName }
+        />
+
+        <GenericInput
+          data={ inputsDatas.RegisterPassword }
           value={ userPassword }
           handler={ handleInputPassword }
         />
 
         <button
           type="submit"
-          data-testid="common_login__button-login"
-          disabled={ validateLogin(userEmail, userPassword) }
+          data-testid="common_register__button-register"
+          disabled={ validateRegister(userEmail, userName, userPassword) }
           onClick={ (event) => handleStatusLogin(event) }
         >
-          LOGIN
+          CADASTRAR
         </button>
 
-        <button
-          type="submit"
-          data-testid="common_login__button-register"
-          onClick={ () => goTo.push('/register') }
-        >
-          Ainda não tenho conta
-        </button>
-
-        { status === StatusCodes.NOT_FOUND
+        { status === StatusCodes.CONFLICT
           && (
             <span
-              data-testid="common_login__element-invalid-email"
+              data-testid="common_register__element-invalid_register"
             >
-              Usuário não encontrado
+              Usuario já registrado!
             </span>
           ) }
       </form>
@@ -76,4 +79,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;
