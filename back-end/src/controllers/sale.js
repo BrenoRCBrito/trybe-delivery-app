@@ -1,5 +1,11 @@
 const saleServices = require('../services/sale');
 
+const getSales = async (req, res) => {
+  const { id, role } = req.user;
+  const sales = await saleServices.getSales(id, role);
+  return res.status(200).json({ sales });
+};
+
 const create = async (req, res) => {
   const { id: userId, role } = req.user;
   if (role !== 'customer') {
@@ -18,4 +24,4 @@ const update = async (req, res) => {
   return res.status(204).end();
 };
 
-module.exports = { create, update };
+module.exports = { getSales, create, update };

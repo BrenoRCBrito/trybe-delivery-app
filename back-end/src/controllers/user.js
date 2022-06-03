@@ -6,10 +6,10 @@ const getAll = async (req, res) => {
   return res.status(200).json({ users });
 };
 
-const destroy = (req, res) => {
+const destroy = async (req, res) => {
   const { id } = req.params;
   const { role } = req.user;
-  userServices.destroy(id, role);
+  await userServices.destroy(id, role);
   return res.status(204).send();
 };
 

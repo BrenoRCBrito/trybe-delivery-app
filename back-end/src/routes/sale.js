@@ -4,6 +4,8 @@ const auth = require('../middlewares/auth');
 
 const router = Router();
 
+router.get('', auth, saleController.getSales);
+
 router.post('', saleController.create);
 
 router.patch('/:id', auth, saleController.update);
