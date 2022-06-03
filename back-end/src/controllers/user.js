@@ -6,4 +6,11 @@ const getAll = async (req, res) => {
   return res.status(200).json({ users });
 };
 
-module.exports = { getAll };
+const destroy = (req, res) => {
+  const { id } = req.params;
+  const { role } = req.user;
+  userServices.destroy(id, role);
+  return res.status(204).send();
+};
+
+module.exports = { getAll, destroy };
