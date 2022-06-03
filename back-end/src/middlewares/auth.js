@@ -9,7 +9,8 @@ const auth = (req, res, next) => {
   }
   try {
     const decoded = decode(token);
-    req.user = decoded;
+    req.user = decoded;    
+
     return next();
   } catch (err) {
     console.error(err);
