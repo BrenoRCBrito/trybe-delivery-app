@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import Context from './Context';
 
 function Provider({ children }) {
-  const [title, setTitle] = useState('');
+  const [userData, setUserData] = useState('');
 
   const context = {
-    title,
-    setTitle,
+    userData,
+    setUserData,
   };
 
   return (

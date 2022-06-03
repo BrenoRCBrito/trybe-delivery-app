@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StatusCodes } from 'http-status-codes';
 import { useHistory } from 'react-router-dom';
+import Context from '../../context/Context';
 
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
@@ -11,7 +12,8 @@ function RegisterForm() {
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [status, setStatus] = useState();
+  const [response, setResponse] = useState();
+  const { setUserData } = useContext(Context);
 
   const goTo = useHistory();
 
@@ -29,12 +31,15 @@ function RegisterForm() {
 
   const handleStatusLogin = async (event) => {
     event.preventDefault();
-    setStatus(await postRegister(userEmail, userName, userPassword));
+    setResponse(await postRegister(userEmail, userName, userPassword));
   };
 
   useEffect(() => {
-    if (typeof status === 'object') return goTo.push('/customer/products');
-  }, [status, goTo]);
+    if (typeof response === 'object') {
+      setUserData(response);
+      return goTo.push('/customer/products');
+    }
+  }, [response, goTo, setUserData]);
 
   return (
     <div>
@@ -66,12 +71,12 @@ function RegisterForm() {
           CADASTRAR
         </button>
 
-        { status === StatusCodes.CONFLICT
+        { response === StatusCodes.CONFLICT
           && (
             <span
               data-testid="common_register__element-invalid_register"
             >
-              Usuario já registrado!
+              Usuário já registrado!
             </span>
           ) }
       </form>

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { StatusCodes } from 'http-status-codes';
 import { useHistory } from 'react-router-dom';
+import Context from '../../context/Context';
 
 import { postLogin } from '../../services';
 import { validateLogin } from '../utils/utils';
@@ -10,7 +11,9 @@ import GenericInput from '../GenericInput';
 function LoginForm() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [status, setStatus] = useState();
+  const [response, setResponse] = useState();
+  const { setUserData } = useContext(Context);
+
   const goTo = useHistory();
 
   const handleInputLogin = ({ target }) => {
@@ -23,12 +26,15 @@ function LoginForm() {
 
   const handleStatusLogin = async (event) => {
     event.preventDefault();
-    setStatus(await postLogin(userEmail, userPassword));
+    setResponse(await postLogin(userEmail, userPassword));
   };
 
   useEffect(() => {
-    if (typeof status === 'object') return goTo.push('/customer/products');
-  }, [status, goTo]);
+    if (typeof response === 'object') {
+      setUserData(response);
+      return goTo.push('/customer/products');
+    }
+  }, [response, goTo, setUserData]);
 
   return (
     <div>
@@ -63,7 +69,7 @@ function LoginForm() {
           Ainda não tenho conta
         </button>
 
-        { status === StatusCodes.NOT_FOUND
+        { response === StatusCodes.NOT_FOUND
           && (
             <span
               data-testid="common_login__element-invalid-email"

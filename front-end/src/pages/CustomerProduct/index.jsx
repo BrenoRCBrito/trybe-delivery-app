@@ -1,9 +1,12 @@
 import React from 'react';
+import Navbar from '../../components/Navbar/Navbar';
 // import LoginForm from '../../components/LoginComponents/Form';
 
 function CustomerProducts() {
   return (
-    <h1>CustomerProductsPage</h1>
+    <div>
+      <Navbar />
+    </div>
   );
 }
 
