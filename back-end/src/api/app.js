@@ -22,6 +22,8 @@ app.use('/user', userRouter);
 
 app.use('/product', productRouter);
 
+app.use('/images', express.static('./public/images'));
+
 app.use('*', notFound);
 
 app.use(error);
