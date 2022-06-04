@@ -3,11 +3,24 @@ import React, { useState } from 'react';
 import Context from './Context';
 
 function Provider({ children }) {
-  const [title, setTitle] = useState('');
+  const [userData, setUserData] = useState('');
+  const [products, setProducts] = useState([]);
+
+  const saveProducts = (array) => {
+    if (array.length > 0) {
+      const productsToSave = array.map((product) => {
+        const { price, ...rest } = product;
+        return { ...rest, price: Number(price) };
+      });
+      setProducts(productsToSave);
+    }
+  };
 
   const context = {
-    title,
-    setTitle,
+    userData,
+    setUserData,
+    products,
+    saveProducts,
   };
 
   return (

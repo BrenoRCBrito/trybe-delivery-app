@@ -19,4 +19,10 @@ function postRegister(email, name, password) {
     .catch((err) => err.response.status);
 }
 
-export { postLogin, postRegister };
+function getProducts(token) {
+  return axios.get('http://localhost:3001/product', { headers: { Authorization: token } })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
+export { postLogin, postRegister, getProducts };
