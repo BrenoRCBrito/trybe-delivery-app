@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
-// import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Context from '../../context/Context';
 
 function Navbar() {
   const { userData } = useContext(Context);
-  // const { item1, item2, item3, username } = props;
-  // const { item1Label, item1Route } = item1;
+  
   return (
 
     <nav>
