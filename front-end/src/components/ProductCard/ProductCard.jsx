@@ -30,11 +30,11 @@ function ProductCard(props) {
       />
 
       <button
-        data-testid={ `customer_products__button-card-add-item-${id}` }
+        data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
-        onClick={ () => setQuantity(quantity + 1) }
+        onClick={ () => { if (quantity > 0) setQuantity(quantity - 1); } }
       >
-        +
+        -
       </button>
 
       <input
@@ -44,13 +44,13 @@ function ProductCard(props) {
         onChange={ ({ target }) => setQuantity(+target.value) }
         data-testid={ `customer_products__input-card-quantity-${id}` }
       />
-
+      
       <button
-        data-testid={ `customer_products__button-card-rm-item-${id}` }
+        data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
-        onClick={ () => { if (quantity > 0) setQuantity(quantity - 1); } }
+        onClick={ () => setQuantity(quantity + 1) }
       >
-        -
+        +
       </button>
 
     </div>
