@@ -4,7 +4,7 @@ import Context from '../../context/Context';
 
 function Navbar() {
   const { userData } = useContext(Context);
-  
+
   return (
 
     <nav>

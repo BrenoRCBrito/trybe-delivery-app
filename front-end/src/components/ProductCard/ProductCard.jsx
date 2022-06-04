@@ -44,7 +44,7 @@ function ProductCard(props) {
         onChange={ ({ target }) => setQuantity(+target.value) }
         data-testid={ `customer_products__input-card-quantity-${id}` }
       />
-      
+
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
