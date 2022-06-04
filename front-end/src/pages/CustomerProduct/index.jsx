@@ -3,18 +3,16 @@ import Context from '../../context/Context';
 import { getProducts } from '../../services';
 import Navbar from '../../components/Navbar/Navbar';
 import ProductsList from '../../components/ProductsList/ProductsList';
-// import LoginForm from '../../components/LoginComponents/Form';
 
 function CustomerProducts() {
-  const { userData, products, setProducts } = useContext(Context);
+  const { userData, products, saveProducts } = useContext(Context);
 
   useEffect(() => {
     getProducts(userData.token)
-      .then((response) => {
-        setProducts(response.products);
-      })
+      .then((response) => saveProducts(response.products))
       .catch((e) => console.log(e));
-  }, [setProducts, userData.token]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div>

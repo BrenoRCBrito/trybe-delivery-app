@@ -1,26 +1,26 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 
 function ProductCard(props) {
   const { product: { id, name, price, urlImage } } = props;
-  // const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
   const priceBR = price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-  console.log(priceBR);
 
   return (
     <div>
-      <p
+      <br />
+      <h2
         data-testid={ `customer_products__element-card-title-${id}` }
       >
         { name }
-      </p>
+      </h2>
 
-      <p
+      <h3
         data-testid={ `customer_products__element-card-price-${id}` }
       >
-        { `R$ ${priceBR}` }
-      </p>
+        { priceBR }
+      </h3>
 
       <img
         width="100px"
@@ -32,21 +32,23 @@ function ProductCard(props) {
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
-        // onClick={ () => setQuantity(quantity + 1) }
+        onClick={ () => setQuantity(quantity + 1) }
       >
         +
       </button>
 
-      <span
+      <input
+        type="number"
+        value={ quantity }
+        min="0"
+        onChange={ ({ target }) => setQuantity(+target.value) }
         data-testid={ `customer_products__input-card-quantity-${id}` }
-      >
-        { 0 }
-      </span>
+      />
 
       <button
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
-        // onClick={ () => { if (quantity > 0) setQuantity(quantity - 1); } }
+        onClick={ () => { if (quantity > 0) setQuantity(quantity - 1); } }
       >
         -
       </button>
@@ -59,10 +61,9 @@ ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number,
     name: PropTypes.string,
-    price: PropTypes.string,
+    price: PropTypes.number,
     urlImage: PropTypes.string,
   }).isRequired,
-
 };
 
 export default ProductCard;
