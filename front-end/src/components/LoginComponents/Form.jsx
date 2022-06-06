@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 
 import { postLogin } from '../../services';
+import { setUserLS } from '../../services/localstorage';
 import { validateLogin } from '../utils/utils';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
@@ -36,6 +37,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (loginStatus) {
+      setUserLS(response);
       setUserData(response);
       switch (response.role) {
       case 'seller':
