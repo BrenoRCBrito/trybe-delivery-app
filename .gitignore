@@ -13,6 +13,7 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+./package-lock.json
 .vscode
 
 # Generated files
