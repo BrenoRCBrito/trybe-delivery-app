@@ -7,7 +7,7 @@ function OrderCard(props) {
   const { sale, data } = props;
 
   return (
-    <Link to={ `/customer/${sale.id}` }>
+    <Link to={ `/${data.role}/${sale.id}` }>
       <label htmlFor={ `${data.html}${sale.id}` }>
         Pedido
         <p
@@ -33,15 +33,14 @@ function OrderCard(props) {
       <p
         data-testid={ `${data.price}${sale.id}` }
       >
-        {sale.total_price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+        {sale.totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
       </p>
 
-      {/* Verificar como está o retorno de address dentro do db */}
       { data.address && (
         <p
           data-testid={ `${data.address}${sale.id}` }
         >
-          { `${sale.delivery_address}, ${sale.delivery_number}` }
+          { `${sale.deliveryAddress}, ${sale.deliveryNumber}` }
         </p>
       ) }
     </Link>
