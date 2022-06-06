@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 function OrderCard(props) {
   const { sale, data } = props;
 
   return (
-    <div>
+    <Link to={ `/customer/${sale.id}` }>
       <label htmlFor={ `${data.html}${sale.id}` }>
         Pedido
         <p
@@ -37,9 +38,13 @@ function OrderCard(props) {
 
       {/* Verificar como está o retorno de address dentro do db */}
       { data.address && (
-        <p>{ `${sale.delivery_address}, ${sale.delivery_number}` }</p>
+        <p
+          data-testid={ `${data.address}${sale.id}` }
+        >
+          { `${sale.delivery_address}, ${sale.delivery_number}` }
+        </p>
       ) }
-    </div>
+    </Link>
   );
 }
 
