@@ -5,13 +5,8 @@ const loginRouter = require('../routes/login');
 const registerRouter = require('../routes/register');
 const productRouter = require('../routes/product');
 const userRouter = require('../routes/user');
-<<<<<<< HEAD
 const saleRouter = require('../routes/sale');
-=======
-// *new route*
-const saleRouter = require('../routes/sale');
-//
->>>>>>> eb2af964a3061cebd15c9bab731e15b542b59fa0
+
 const notFound = require('../middlewares/notFound');
 const error = require('../middlewares/error');
 
