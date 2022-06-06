@@ -1,9 +1,12 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
+
+import { clearLocalStorage } from '../../services/localstorage';
 
 function Navbar() {
   const { userData } = useContext(Context);
+  const goTo = useHistory();
 
   return (
 
@@ -27,12 +30,23 @@ function Navbar() {
         >
           { userData.name }
         </h3>
-        <Link
+
+        <button
+          type="button"
+          data-testid="customer_products__element-navbar-link-logout"
+          onClick={ () => {
+            clearLocalStorage();
+            goTo.push('/login');
+          } }
+        >
+          Logout
+        </button>
+        {/* <Link
           data-testid="customer_products__element-navbar-link-logout"
           to="/login"
         >
           Logout
-        </Link>
+        </Link> */}
 
       </div>
     </nav>

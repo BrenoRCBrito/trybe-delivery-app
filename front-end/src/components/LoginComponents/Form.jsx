@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 
 import { postLogin } from '../../services';
+import { setUserLS } from '../../services/localstorage';
 import { validateLogin } from '../utils/utils';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
@@ -31,6 +32,7 @@ function LoginForm() {
 
   useEffect(() => {
     if (typeof response === 'object') {
+      setUserLS(response);
       setUserData(response);
       return goTo.push('/customer/products');
     }
