@@ -6,6 +6,7 @@ import CustomerProduct from './CustomerProduct';
 import Admin from './Admin';
 import CustomerOrders from './CustomerOrders';
 import SellerOrders from './SellerOrders';
+import CustomerCheckout from './CustomerCheckout';
 
 function Pages() {
   return (
@@ -16,6 +17,7 @@ function Pages() {
       <Route exact path="/admin/manage" component={ Admin } />
       <Route exact path="/customer/orders" component={ CustomerOrders } />
       <Route exact path="/seller/orders" component={ SellerOrders } />
+      <Route exact path="/customer/checkout" component={ CustomerCheckout } />
       <Route render={ () => <Redirect to={ { pathname: '/login' } } /> } />
     </Switch>
   );

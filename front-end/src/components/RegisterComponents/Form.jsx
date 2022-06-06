@@ -6,6 +6,7 @@ import Context from '../../context/Context';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
 import { postRegister } from '../../services';
+import { setUserLS } from '../../services/localstorage';
 import { validateRegister } from '../utils/utils';
 
 function RegisterForm() {
@@ -36,6 +37,7 @@ function RegisterForm() {
 
   useEffect(() => {
     if (typeof response === 'object') {
+      setUserLS(response);
       setUserData(response);
       return goTo.push('/customer/products');
     }

@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import Context from '../../context/Context';
 
 function ProductCard(props) {
-  const { product: { id, name, price, urlImage } } = props;
-  const [quantity, setQuantity] = useState(0);
+  const { product: { id, name, price, urlImage, quantity } } = props;
+  const { setQuantity } = useContext(Context);
 
   const priceBR = price.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
@@ -32,7 +33,9 @@ function ProductCard(props) {
       <button
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         type="button"
-        onClick={ () => { if (quantity > 0) setQuantity(quantity - 1); } }
+        onClick={ () => {
+          if (quantity > 0) setQuantity(id, quantity - 1);
+        } }
       >
         -
       </button>
@@ -41,14 +44,14 @@ function ProductCard(props) {
         type="number"
         value={ quantity }
         min="0"
-        onChange={ ({ target }) => setQuantity(+target.value) }
+        onChange={ ({ target }) => setQuantity(id, +target.value) }
         data-testid={ `customer_products__input-card-quantity-${id}` }
       />
 
       <button
         data-testid={ `customer_products__button-card-add-item-${id}` }
         type="button"
-        onClick={ () => setQuantity(quantity + 1) }
+        onClick={ () => setQuantity(id, quantity + 1) }
       >
         +
       </button>
@@ -63,6 +66,7 @@ ProductCard.propTypes = {
     name: PropTypes.string,
     price: PropTypes.number,
     urlImage: PropTypes.string,
+    quantity: PropTypes.number,
   }).isRequired,
 };
 
