@@ -25,4 +25,15 @@ function getProducts(token) {
     .catch((err) => err.response.status);
 }
 
-export { postLogin, postRegister, getProducts };
+function getOrders(token) {
+  return axios.get('http://localhost:3001/orders', { headers: { Authorization: token } })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
+export {
+  postLogin,
+  postRegister,
+  getProducts,
+  getOrders,
+};
