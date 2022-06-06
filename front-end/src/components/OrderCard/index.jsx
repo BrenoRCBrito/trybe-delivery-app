@@ -8,41 +8,47 @@ function OrderCard(props) {
 
   return (
     <Link to={ `/${data.role}/${sale.id}` }>
-      <label htmlFor={ `${data.html}${sale.id}` }>
-        Pedido
-        <p
-          id={ `${data.html}${sale.id}` }
-          data-testid={ `${data.id}${sale.id}` }
-        >
-          {sale.id}
-        </p>
-      </label>
+      <div>
+        <div>
+          <label htmlFor={ `${data.html}${sale.id}` }>
+            Pedido
+            <p
+              id={ `${data.html}${sale.id}` }
+              data-testid={ `${data.id}${sale.id}` }
+            >
+              {sale.id}
+            </p>
+          </label>
+        </div>
+        <div>
+          <div
+            data-testid={ `${data.status}${sale.id}` }
+          >
+            {sale.status}
+          </div>
 
-      <p
-        data-testid={ `${data.status}${sale.id}` }
-      >
-        {sale.status}
-      </p>
+          <div
+            data-testid={ `${data.date}${sale.id}` }
+          >
+            {moment(sale.sale_date).format('L')}
+          </div>
 
-      <p
-        data-testid={ `${data.date}${sale.id}` }
-      >
-        {moment(sale.sale_date).format('L')}
-      </p>
+          <div
+            data-testid={ `${data.price}${sale.id}` }
+          >
+            {sale.totalPrice
+              .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+          </div>
 
-      <p
-        data-testid={ `${data.price}${sale.id}` }
-      >
-        {sale.totalPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-      </p>
-
-      { data.address && (
-        <p
-          data-testid={ `${data.address}${sale.id}` }
-        >
-          { `${sale.deliveryAddress}, ${sale.deliveryNumber}` }
-        </p>
-      ) }
+          { data.address && (
+            <div
+              data-testid={ `${data.address}${sale.id}` }
+            >
+              { `${sale.deliveryAddress}, ${sale.deliveryNumber}` }
+            </div>
+          ) }
+        </div>
+      </div>
     </Link>
   );
 }
