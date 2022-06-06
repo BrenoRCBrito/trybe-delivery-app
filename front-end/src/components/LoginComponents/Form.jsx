@@ -12,6 +12,7 @@ function LoginForm() {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [response, setResponse] = useState();
+  const [loginStatus, setLoginStatus] = useState(false);
   const { setUserData } = useContext(Context);
 
   const goTo = useHistory();
@@ -26,15 +27,28 @@ function LoginForm() {
 
   const handleStatusLogin = async (event) => {
     event.preventDefault();
-    setResponse(await postLogin(userEmail, userPassword));
+    const res = await postLogin(userEmail, userPassword);
+    setResponse(res);
+    if (res.token) {
+      setLoginStatus(true);
+    }
   };
 
   useEffect(() => {
-    if (typeof response === 'object') {
+    if (loginStatus) {
       setUserData(response);
-      return goTo.push('/customer/products');
+      switch (response.role) {
+      case 'seller':
+        goTo.push('/seller/orders');
+        break;
+      case 'administrator':
+        goTo.push('/admin/manage');
+        break;
+      default:
+        goTo.push('/customer/products');
+      }
     }
-  }, [response, goTo, setUserData]);
+  }, [goTo, loginStatus, response, setUserData]);
 
   return (
     <div>
@@ -69,14 +83,11 @@ function LoginForm() {
           Ainda não tenho conta
         </button>
 
-        { response === StatusCodes.NOT_FOUND
-          && (
-            <span
-              data-testid="common_login__element-invalid-email"
-            >
-              Usuário não encontrado
-            </span>
-          ) }
+        {response === StatusCodes.NOT_FOUND && (
+          <span data-testid="common_login__element-invalid-email">
+            Usuário não encontrado
+          </span>
+        )}
       </form>
     </div>
   );
