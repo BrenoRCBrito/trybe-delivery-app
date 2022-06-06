@@ -5,6 +5,9 @@ const loginRouter = require('../routes/login');
 const registerRouter = require('../routes/register');
 const productRouter = require('../routes/product');
 const userRouter = require('../routes/user');
+// *new route*
+const saleRouter = require('../routes/sale');
+//
 const notFound = require('../middlewares/notFound');
 const error = require('../middlewares/error');
 
@@ -23,6 +26,10 @@ app.use('/user', userRouter);
 app.use('/product', productRouter);
 
 app.use('/images', express.static('./public/images'));
+
+// *new route*
+app.use('/orders', saleRouter);
+//
 
 app.use('*', notFound);
 
