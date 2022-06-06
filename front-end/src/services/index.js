@@ -28,11 +28,6 @@ function getProducts(token) {
     .catch((err) => err.response.status);
 }
 
-function getSales(token) {
-  return axios
-    .get('http://localhost:3001/sale', { headers: { Authorization: token } });
-}
-
 function getOrders(token) {
   return axios.get('http://localhost:3001/orders', { headers: { Authorization: token } })
     .then((res) => res.data)
@@ -44,5 +39,4 @@ export {
   postRegister,
   getProducts,
   getOrders,
-  getSales,
 };
