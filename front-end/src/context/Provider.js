@@ -4,12 +4,8 @@ import Context from './Context';
 import { getCartLS, getUserLS, setCartLS, setUserLS } from '../services/localstorage';
 
 function Provider({ children }) {
-<<<<<<< HEAD
   const [userData, setUserData] = useState({});
-=======
-  const [userData, setUserData] = useState('');
   const [cart, setCart] = useState(getCartLS());
->>>>>>> 59710e5929fce89ceebf7a8ebd3724df648d5bc7
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
@@ -58,15 +54,11 @@ function Provider({ children }) {
     setUserData,
     cart,
     products,
-<<<<<<< HEAD
-    saveProducts,
     orders,
     setOrders,
-=======
     setQuantity,
     initializeCart,
     initializeUser,
->>>>>>> 59710e5929fce89ceebf7a8ebd3724df648d5bc7
   };
 
   return (
