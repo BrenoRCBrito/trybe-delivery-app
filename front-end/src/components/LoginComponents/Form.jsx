@@ -31,11 +31,11 @@ function LoginForm() {
 
   useEffect(() => {
     if (response === Object(response)) {
-      response.role === 'customer' && goTo.push('/customer/products');
-      response.role === 'seller' && goTo.push('/seller/orders');
-      response.role === 'administrator' && goTo.push('/admin/manage');
-    };
-      setUserData(response);
+      if (response.role === 'customer') return goTo.push('/customer/products');
+      if (response.role === 'seller') return goTo.push('/seller/orders');
+      if (response.role === 'administrator') return goTo.push('/admin/manage');
+    }
+    setUserData(response);
   }, [response, goTo, setUserData]);
 
   return (
