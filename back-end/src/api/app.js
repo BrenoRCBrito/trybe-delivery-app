@@ -28,9 +28,7 @@ app.use('/sale', saleRouter);
 
 app.use('/images', express.static('./public/images'));
 
-// *new route*
 app.use('/orders', saleRouter);
-//
 
 app.use('*', notFound);
 
