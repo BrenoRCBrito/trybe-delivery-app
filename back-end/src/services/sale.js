@@ -22,13 +22,13 @@ const getSales = async (id, role) => {
   let sales;
   switch (role) {
     case 'customer':
-      sales = await Sale.findAll({ where: { userId: id } });
+      sales = await Sale.findAll({ where: { userId: id }, include: { all: true } });
       break;
     case 'seller':
-      sales = await Sale.findAll({ where: { sellerId: id } });
+      sales = await Sale.findAll({ where: { sellerId: id }, include: { all: true } });
       break;
     case 'administrator':
-      sales = await Sale.findAll();
+      sales = await Sale.findAll({ include: { all: true } });
       break;
     default:
       sales = [];
