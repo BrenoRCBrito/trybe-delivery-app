@@ -5,6 +5,7 @@ import Context from './Context';
 function Provider({ children }) {
   const [userData, setUserData] = useState({});
   const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   const saveProducts = (array) => {
     if (array.length > 0) {
@@ -21,6 +22,8 @@ function Provider({ children }) {
     setUserData,
     products,
     saveProducts,
+    orders,
+    setOrders,
   };
 
   return (
