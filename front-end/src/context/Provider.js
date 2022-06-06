@@ -54,10 +54,7 @@ function Provider({ children }) {
     setUserData,
     cart,
     products,
-<<<<<<< HEAD
     saveProducts,
-=======
->>>>>>> 1f2a1d7ad937c3859c51af0e32d644722ab7066c
     orders,
     setOrders,
     setQuantity,
