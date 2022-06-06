@@ -30,10 +30,12 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    if (typeof response === 'object') {
-      setUserData(response);
-      return goTo.push('/customer/products');
+    if (response === Object(response)) {
+      if (response.role === 'customer') return goTo.push('/customer/products');
+      if (response.role === 'seller') return goTo.push('/seller/orders');
+      if (response.role === 'administrator') return goTo.push('/admin/manage');
     }
+    setUserData(response);
   }, [response, goTo, setUserData]);
 
   return (
