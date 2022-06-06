@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Context from './Context';
 
 function Provider({ children }) {
-  const [userData, setUserData] = useState('');
+  const [userData, setUserData] = useState({});
   const [products, setProducts] = useState([]);
 
   const saveProducts = (array) => {
