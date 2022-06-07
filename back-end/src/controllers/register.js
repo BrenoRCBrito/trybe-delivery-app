@@ -15,7 +15,6 @@ const registerCustomer = async (req, res) => {
 const registerAdmin = async (req, res) => {
   const { name, email, password, role } = req.body;
   const { role: requestedRole } = req.user;
-  console.log(req.user);
   if (requestedRole !== 'administrator') {
     return res.status(401).send({ error: 'Unauthorized' });
   }

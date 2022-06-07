@@ -1,4 +1,5 @@
 const userServices = require('../services/user');
+const { create } = require('../utils/jwt');
 
 const getAll = async (req, res) => {
   const { role } = req.user;
@@ -13,4 +14,15 @@ const destroy = async (req, res) => {
   return res.status(204).send();
 };
 
-module.exports = { getAll, destroy };
+const renew = async (req, res) => {
+  const { id, role, email } = req.user;
+  const response = await userServices.renew(id, role, email);
+  const {
+    dataValues: { ...userWithoutPassword },
+  } = response;
+  delete userWithoutPassword.password;
+  const token = create(userWithoutPassword);
+  return res.status(200).json({ token, ...userWithoutPassword });
+};  
+
+module.exports = { getAll, destroy, renew };

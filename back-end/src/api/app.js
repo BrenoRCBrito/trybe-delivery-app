@@ -9,10 +9,12 @@ const saleRouter = require('../routes/sale');
 
 const notFound = require('../middlewares/notFound');
 const error = require('../middlewares/error');
+const useMorgan = require('../middlewares/useMorgan');
 
 const app = express();
 
 app.use(cors());
+app.use(useMorgan);
 
 app.use(express.json());
 

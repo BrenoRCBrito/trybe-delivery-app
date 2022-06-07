@@ -1,0 +1,84 @@
+{
+  "sales": [
+      {
+          "id": 1,
+          "totalPrice": "565.50",
+          "deliveryAddress": "rua do bobo",
+          "deliveryNumber": "400",
+          "status": "Pendente",
+          "sellerId": 2,
+          "userId": 3,
+          "saleDate": "2022-06-07T16:36:12.000Z",
+          "user": {
+              "id": 3,
+              "name": "Cliente Zé Birita",
+              "email": "zebirita@email.com",
+              "role": "customer"
+          },
+          "seller": {
+              "id": 2,
+              "name": "Fulana Pereira",
+              "email": "fulana@deliveryapp.com",
+              "role": "seller"
+          },
+          "products": [
+              {
+                  "id": 2,
+                  "name": "Heineken 600ml",
+                  "price": "7.50",
+                  "qtd": {
+                      "quantity": 9
+                  }
+              },
+              {
+                  "id": 3,
+                  "name": "Antarctica Pilsen 300ml",
+                  "price": "2.49",
+                  "qtd": {
+                      "quantity": 200
+                  }
+              }
+          ]
+      },
+      {
+          "id": 2,
+          "totalPrice": "111.30",
+          "deliveryAddress": "rua do mané",
+          "deliveryNumber": "680",
+          "status": "Em Trânsito",
+          "sellerId": 2,
+          "userId": 3,
+          "saleDate": "2022-06-07T16:36:12.000Z",
+          "user": {
+              "id": 3,
+              "name": "Cliente Zé Birita",
+              "email": "zebirita@email.com",
+              "role": "customer"
+          },
+          "seller": {
+              "id": 2,
+              "name": "Fulana Pereira",
+              "email": "fulana@deliveryapp.com",
+              "role": "seller"
+          },
+          "products": [
+              {
+                  "id": 4,
+                  "name": "Brahma 600ml",
+                  "price": "7.50",
+                  "qtd": {
+                      "quantity": 9
+                  }
+              },
+              {
+                  "id": 5,
+                  "name": "Skol 269ml",
+                  "price": "2.19",
+                  "qtd": {
+                      "quantity": 20
+                  }
+              }
+          ]
+      }
+  ]
+}

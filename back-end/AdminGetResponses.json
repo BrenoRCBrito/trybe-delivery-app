@@ -1,0 +1,100 @@
+{
+  "sales": [
+      {
+          "id": 1,
+          "totalPrice": "565.50",
+          "deliveryAddress": "rua do bobo",
+          "deliveryNumber": "400",
+          "status": "Pendente",
+          "sellerId": 2,
+          "userId": 3,
+          "saleDate": "2022-06-07T16:36:12.000Z",
+          "user": {
+              "id": 3,
+              "name": "Cliente Zé Birita",
+              "email": "zebirita@email.com",
+              "password": "1c37466c159755ce1fa181bd247cb925",
+              "role": "customer"
+          },
+          "seller": {
+              "id": 2,
+              "name": "Fulana Pereira",
+              "email": "fulana@deliveryapp.com",
+              "password": "3c28d2b0881bf46457a853e0b07531c6",
+              "role": "seller"
+          },
+          "products": [
+              {
+                  "id": 2,
+                  "name": "Heineken 600ml",
+                  "price": "7.50",
+                  "urlImage": "http://localhost:3001/images/heineken_600ml.jpg",
+                  "SaleProduct": {
+                      "saleId": 1,
+                      "productId": 2,
+                      "quantity": 9
+                  }
+              },
+              {
+                  "id": 3,
+                  "name": "Antarctica Pilsen 300ml",
+                  "price": "2.49",
+                  "urlImage": "http://localhost:3001/images/antarctica_pilsen_300ml.jpg",
+                  "SaleProduct": {
+                      "saleId": 1,
+                      "productId": 3,
+                      "quantity": 200
+                  }
+              }
+          ]
+      },
+      {
+          "id": 2,
+          "totalPrice": "111.30",
+          "deliveryAddress": "rua do mané",
+          "deliveryNumber": "680",
+          "status": "Em Trânsito",
+          "sellerId": 2,
+          "userId": 3,
+          "saleDate": "2022-06-07T16:36:12.000Z",
+          "user": {
+              "id": 3,
+              "name": "Cliente Zé Birita",
+              "email": "zebirita@email.com",
+              "password": "1c37466c159755ce1fa181bd247cb925",
+              "role": "customer"
+          },
+          "seller": {
+              "id": 2,
+              "name": "Fulana Pereira",
+              "email": "fulana@deliveryapp.com",
+              "password": "3c28d2b0881bf46457a853e0b07531c6",
+              "role": "seller"
+          },
+          "products": [
+              {
+                  "id": 4,
+                  "name": "Brahma 600ml",
+                  "price": "7.50",
+                  "urlImage": "http://localhost:3001/images/brahma_600ml.jpg",
+                  "SaleProduct": {
+                      "saleId": 2,
+                      "productId": 4,
+                      "quantity": 9
+                  }
+              },
+              {
+                  "id": 5,
+                  "name": "Skol 269ml",
+                  "price": "2.19",
+                  "urlImage": "http://localhost:3001/images/skol_269ml.jpg",
+                  "SaleProduct": {
+                      "saleId": 2,
+                      "productId": 5,
+                      "quantity": 20
+                  }
+              }
+          ]
+      }
+  ]
+}
