@@ -40,10 +40,17 @@ function getSellers(token) {
     .catch((err) => err.response.status);
 }
 
+function postOrder(token, cart) {
+  return axios.post('http://localhost:3001/sale', cart, { headers: { Authorization: token } })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
 export {
   postLogin,
   postRegister,
   getProducts,
   getOrders,
   getSellers,
+  postOrder,
 };

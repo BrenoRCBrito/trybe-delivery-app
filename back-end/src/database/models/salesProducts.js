@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
     saleProduct,
     {
       timestamps: false,
-      tableName: "sales_products",
+      tableName: "salesProducts",
       underscored: true,
     }
   );

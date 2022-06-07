@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function CheckoutTable(props) {
-  const { products } = props;
+  const { products, handleRemoveItem } = props;
   return (
     <table>
       <thead>
@@ -56,7 +56,7 @@ function CheckoutTable(props) {
                 <button
                   type="button"
                   data-testid={ `customer_checkout__element-order-table-remove-${i}` }
-                  onClick={ () => console.log(id) }
+                  onClick={ () => handleRemoveItem(id) }
                 >
                   x
                 </button>
@@ -77,6 +77,7 @@ CheckoutTable.propTypes = {
     quantity: PropTypes.number.isRequired,
     id: PropTypes.number.isRequired,
   })).isRequired,
+  handleRemoveItem: PropTypes.func.isRequired,
 };
 
 export default CheckoutTable;

@@ -5,7 +5,7 @@ import { getCartLS, getUserLS, setCartLS, setUserLS } from '../services/localsto
 
 function Provider({ children }) {
   const [userData, setUserData] = useState({});
-  const [cart, setCart] = useState(getCartLS());
+  const [checkout, setCheckout] = useState(getCartLS());
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
@@ -21,7 +21,7 @@ function Provider({ children }) {
 
   const calculateTotalPrice = (array) => {
     const sum = array.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
-    const response = Math.floor(sum * 100) / 100;
+    const response = Math.round(sum * 100) / 100;
     return response;
   };
 
@@ -29,7 +29,8 @@ function Provider({ children }) {
     const productsToSave = array.map((product) => {
       const { price, id, ...rest } = product;
       let quantity = 0;
-      const foundProduct = cart.products.find(({ id: productId }) => id === productId);
+      const foundProduct = checkout
+        .products.find(({ id: productId }) => id === productId);
       if (foundProduct) {
         quantity = foundProduct.quantity;
       }
@@ -38,8 +39,12 @@ function Provider({ children }) {
     const totalPrice = calculateTotalPrice(productsToSave);
     const onlyAddedProducts = productsToSave.filter(({ quantity }) => quantity > 0);
     setProducts(productsToSave);
-    setCartLS({ ...cart, userId: userData.id, totalPrice, products: onlyAddedProducts });
-    setCart({ ...cart, userId: userData.id, totalPrice, products: onlyAddedProducts });
+    setCartLS({
+      cart: { ...checkout.cart, totalPrice },
+      products: onlyAddedProducts });
+    setCheckout({
+      cart: { ...checkout.cart, totalPrice },
+      products: onlyAddedProducts });
   };
 
   const setQuantity = (id, qtd) => {
@@ -49,17 +54,18 @@ function Provider({ children }) {
     const totalPrice = calculateTotalPrice(productsToUpdate);
     const onlyAddedProducts = products.filter(({ quantity }) => quantity > 0);
     setProducts(productsToUpdate);
-    setCart({ ...cart, totalPrice, products: onlyAddedProducts });
-    setCartLS({ ...cart, totalPrice, products: onlyAddedProducts });
+    setCheckout({ cart: { ...checkout.cart, totalPrice }, products: onlyAddedProducts });
+    setCartLS({ cart: { ...checkout.cart, totalPrice }, products: onlyAddedProducts });
   };
 
   const context = {
     userData,
     setUserData,
-    cart,
-    setCart,
+    checkout,
+    setCheckout,
     products,
     orders,
+    calculateTotalPrice,
     setOrders,
     setQuantity,
     initializeCart,

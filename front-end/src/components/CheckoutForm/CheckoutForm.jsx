@@ -1,20 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../../context/Context';
+import { setCartLS } from '../../services/localstorage';
 
 function CheckoutForm(props) {
-  const { sellers, handleChange } = props;
+  const { sellers, handleChange, handleSubmit } = props;
   const [disabled, setDisabled] = useState(true);
-  const { cart } = useContext(Context);
+  const { checkout } = useContext(Context);
+  const { cart: { sellerId, deliveryAddress, deliveryNumber } } = checkout;
 
   useEffect(() => {
-    if (cart.sellerId && cart.deliveryAddress && cart.deliveryNumber) {
+    if (sellerId && deliveryAddress && deliveryNumber) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
-    // eslint-disable-next-line
-  }, [cart.sellerId, cart.deliveryAddress, cart.deliveryNumber]);
+    setCartLS(checkout);
+  }, [checkout, deliveryAddress, deliveryNumber, sellerId]);
 
   return (
     <div>
@@ -25,7 +27,7 @@ function CheckoutForm(props) {
             data-testid="customer_checkout__select-seller"
             name="sellerId"
             id="sellers-select"
-            value={ cart.sellerId }
+            value={ sellerId }
             onChange={ handleChange }
             required
           >
@@ -48,7 +50,7 @@ function CheckoutForm(props) {
             name="deliveryAddress"
             id="delivery-address"
             placeholder="Endereço"
-            value={ cart.deliveryAddress }
+            value={ deliveryAddress }
             onChange={ handleChange }
             required
           />
@@ -61,7 +63,7 @@ function CheckoutForm(props) {
             name="deliveryNumber"
             id="delivery-number"
             placeholder="Número"
-            value={ cart.deliveryNumber }
+            value={ deliveryNumber }
             onChange={ handleChange }
             required
           />
@@ -69,7 +71,7 @@ function CheckoutForm(props) {
         <button
           data-testid="customer_checkout__button-submit-order"
           type="button"
-          onClick={ () => console.log('cliquei') }
+          onClick={ handleSubmit }
           disabled={ disabled }
         >
           Finalizar pedido
@@ -85,6 +87,7 @@ CheckoutForm.propTypes = {
     name: PropTypes.string.isRequired,
   })).isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default CheckoutForm;
