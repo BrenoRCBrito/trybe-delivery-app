@@ -26,10 +26,19 @@ const destroy = async (id, role) => {
   }
   const response = await User.findOne({ where: { id } });
   if (!response) {
-    const noUserError = { status: 401, error: 'User not found' };
+    const noUserError = { status: 404, error: 'User not found' };
     throw noUserError;
   }
   response.destroy();
 };
 
-module.exports = { getAll, destroy };
+const renew = async (id, role, email) => {
+  const foundUser = await User.findOne({ where: { id, role, email } });
+  if (!foundUser) {
+    const noUserError = { status: 404, error: 'User not found' };
+    throw noUserError;
+  }
+  return foundUser;
+};
+
+module.exports = { getAll, destroy, renew };

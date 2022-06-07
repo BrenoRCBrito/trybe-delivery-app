@@ -33,8 +33,8 @@ module.exports = (sequelize) => {
   });
 
   defineUser.associate = (models) => {
-    defineUser.hasMany(models.Sale, { foreignKey: "userId", as: "userId" });
-    defineUser.hasMany(models.Sale, { foreignKey: "sellerId", as: "sellerId" });
+    defineUser.hasMany(models.Sale, { foreignKey: "userId", as: "user" });
+    defineUser.hasMany(models.Sale, { foreignKey: "sellerId", as: "seller" });
   };
 
   return defineUser;

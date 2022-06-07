@@ -1,5 +1,9 @@
 const { Sale, SaleProduct } = require('../database/models');
 
+const include = [
+  { all: true, attributes: { exclude: ['password'] } },
+];
+
 const create = async (userId, products, cart) => {
   const { sellerId, totalPrice, deliveryAddress, deliveryNumber } = cart;
   const newSale = await Sale.create({
@@ -11,24 +15,44 @@ const create = async (userId, products, cart) => {
     status: 'Pendente',
   });
   const { id: saleId } = newSale;
-  await products.map(async ({ id: productId, quantity }) => {
+  await Promise.all(products.map(async ({ id: productId, quantity }) => {
     const newSaleProduct = await SaleProduct.create({ saleId, productId, quantity });
-    return newSaleProduct;
-  });
-  return newSale;
+    return { ...newSaleProduct.dataValues };
+  }));
+  const sale = await Sale.findOne({ where: { id: saleId }, include });
+  return sale;
 };
 
 const getSales = async (id, role) => {
   let sales;
   switch (role) {
     case 'customer':
-      sales = await Sale.findAll({ where: { userId: id }, include: { all: true } });
+      sales = await Sale.findAll({ where: { userId: id }, include });
       break;
     case 'seller':
-      sales = await Sale.findAll({ where: { sellerId: id }, include: { all: true } });
+      sales = await Sale.findAll({ where: { sellerId: id }, include });
       break;
     case 'administrator':
-      sales = await Sale.findAll({ include: { all: true } });
+      sales = await Sale.findAll({ include });
+      break;
+    default:
+      sales = [];
+      break;
+  }
+  return sales;
+};
+
+const getSalesById = async (id, role, saleId) => {
+  let sales;
+  switch (role) {
+    case 'customer':
+      sales = await Sale.findAll({ where: { userId: id, id: saleId }, include });
+      break;
+    case 'seller':
+      sales = await Sale.findAll({ where: { sellerId: id, id: saleId }, include });
+      break;
+    case 'administrator':
+      sales = await Sale.findAll({ include });
       break;
     default:
       sales = [];
@@ -50,4 +74,4 @@ const update = async (id, role, status) => {
   await sale.update({ ...sale, status }, { where: { id } });
 };
 
-module.exports = { getSales, create, update };
+module.exports = { getSales, getSalesById, create, update };
