@@ -34,7 +34,22 @@ function getOrders(token) {
     .catch((err) => err.response.status);
 }
 
+// too many parameters
+function postAdminRegister({ userEmail, userName, userPassword, userRole, token }) {
+  return axios
+    .post('http://localhost:3001/register/admin', {
+      email: userEmail,
+      name: userName,
+      password: userPassword,
+      role: userRole,
+    },
+    { headers: { Authorization: token } })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
 export {
+  postAdminRegister,
   postLogin,
   postRegister,
   getProducts,
