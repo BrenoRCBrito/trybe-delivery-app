@@ -54,8 +54,15 @@ function OrderCard(props) {
 }
 
 OrderCard.propTypes = {
-  sale: PropTypes.objectOf.isRequired,
   data: PropTypes.objectOf(PropTypes.string).isRequired,
+  sale: PropTypes.shape({
+    deliveryAddress: PropTypes.string,
+    deliveryNumber: PropTypes.string,
+    id: PropTypes.number,
+    saleDate: PropTypes.string,
+    status: PropTypes.string,
+    totalPrice: PropTypes.string,
+  }).isRequired,
 };
 
 export default OrderCard;

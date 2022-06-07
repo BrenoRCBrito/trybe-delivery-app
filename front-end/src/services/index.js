@@ -36,7 +36,7 @@ function getSales(token) {
 
 function getSale(token, id) {
   return axios.get(`http://localhost:3001/sale/${id}`, { headers: { Authorization: token } })
-    .then((res) => res.data[0])
+    .then((res) => res.data.sale)
     .catch((err) => err.response.status);
 }
 
