@@ -34,7 +34,7 @@ function Provider({ children }) {
     const onlyAddedProducts = productsToSave.filter(({ quantity }) => quantity > 0);
     setProducts(productsToSave);
     setCartLS({ ...cart, userId: userData.id, totalPrice, products: onlyAddedProducts });
-    setCart({ ...cart, userId: userData.id, totalPrice, products: productsToSave });
+    setCart({ ...cart, userId: userData.id, totalPrice, products: onlyAddedProducts });
   };
 
   const setQuantity = (id, qtd) => {
@@ -53,6 +53,7 @@ function Provider({ children }) {
     userData,
     setUserData,
     cart,
+    setCart,
     products,
     orders,
     setOrders,

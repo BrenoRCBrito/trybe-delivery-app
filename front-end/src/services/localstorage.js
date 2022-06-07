@@ -12,6 +12,7 @@ const getCartLS = () => {
     products: [],
     totalPrice: 0,
     deliveryAddress: '',
+    deliveryNumber: '',
     sellerId: '',
     userId: '' };
 };
