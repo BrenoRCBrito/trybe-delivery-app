@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import adminData from '../utils/adminData';
 import GenericInput from '../GenericInput';
 import { validateRegister as buttonEnabler } from '../utils/utils';
+import { postAdminRegister } from '../../services';
+import Context from '../../context/Context';
 
 function AdminForm() {
   const [userName, setUserName] = useState('');
@@ -9,12 +11,18 @@ function AdminForm() {
   const [userPassword, setUserPassword] = useState('');
   const [userRole, setUserRole] = useState('seller');
   const [registerButton, setRegisterButton] = useState(false);
+  const { token } = useContext(Context).userData;
 
   const generalHandler = ({ target }) => {
     if (target.id === 'name-id') setUserName(target.value);
     if (target.id === 'email-id') setUserEmail(target.value);
     if (target.id === 'password-id') setUserPassword(target.value);
     if (target.id === 'select-role-id') setUserRole(target.value);
+  };
+
+  const handleRegister = async () => {
+    const newUser = { userEmail, userName, userPassword, userRole, token };
+    await postAdminRegister(newUser);
   };
 
   useEffect(() => {
@@ -54,6 +62,7 @@ function AdminForm() {
           type="button"
           data-testid="admin_manage__button-register"
           disabled={ registerButton }
+          onClick={ handleRegister }
         >
           Cadastrar
         </button>
