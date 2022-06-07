@@ -136,7 +136,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJuYW1lIjoiRGVsaXZlcnkgQXBwIEFkbWluIiwiZW1haWwiOiJhZG1AZGVsaXZlcnlhcHAuY29tIiwicm9sZSI6ImFkbWluaXN0cmF0b3IifSwiaWF0IjoxNjU0MDk3NjAwLCJleHAiOjE2NTQxODQwMDB9.BI-szJ69DSLH8D12ptE4E7F4eK6Xr8XxVBlCjoDEyXU",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkRlbGl2ZXJ5IEFwcCBBZG1pbiIsImVtYWlsIjoiYWRtQGRlbGl2ZXJ5YXBwLmNvbSIsInJvbGUiOiJhZG1pbmlzdHJhdG9yIiwiaWF0IjoxNjU0MTEyODkzLCJleHAiOjE2NTQxOTkyOTN9.VbtEl0a6jx5L7sDSLZZPYQpr3ttFi3PkcO9vHLu3VPs",
 						"type": "text"
 					}
 				],
@@ -190,6 +190,32 @@
 			"response": []
 		},
 		{
+			"name": "Get Renew Token",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibmFtZSI6IkRlbGl2ZXJ5IEFwcCBBZG1pbiIsImVtYWlsIjoiYWRtQGRlbGl2ZXJ5YXBwLmNvbSIsInJvbGUiOiJhZG1pbmlzdHJhdG9yIiwiaWF0IjoxNjU0NjIxNTMwLCJleHAiOjE2NTQ3MDc5MzB9.L1picNbsaallY6UPs9GYXK2PcuuisO312b9ySubPVog",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/user/renew",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"user",
+						"renew"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete User By Id",
 			"request": {
 				"method": "DELETE",
@@ -223,19 +249,19 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozLCJuYW1lIjoiQ2xpZW50ZSBaw6kgQmlyaXRhIiwiZW1haWwiOiJ6ZWJpcml0YUBlbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIifSwiaWF0IjoxNjU0MDkzMDk3LCJleHAiOjE2NTQxNzk0OTd9.y-iVWss_6d24kimjSE-XFzbp_YqROc4DeKs0_eKevb0",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkNsaWVudGUgWsOpIEJpcml0YSIsImVtYWlsIjoiemViaXJpdGFAZW1haWwuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjU0NjE2MTg3LCJleHAiOjE2NTQ3MDI1ODd9.T7zpa2QihNMybI9rmR7swTxTF7WNgxrwUF3yCQ3gWUo",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/products",
+					"raw": "http://localhost:{{PORT}}/product",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "{{PORT}}",
 					"path": [
-						"products"
+						"product"
 					]
 				}
 			},
@@ -248,19 +274,19 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoxLCJuYW1lIjoiRGVsaXZlcnkgQXBwIEFkbWluIiwiZW1haWwiOiJhZG1AZGVsaXZlcnlhcHAuY29tIiwicm9sZSI6ImFkbWluaXN0cmF0b3IifSwiaWF0IjoxNjU0MDk3NjAwLCJleHAiOjE2NTQxODQwMDB9.BI-szJ69DSLH8D12ptE4E7F4eK6Xr8XxVBlCjoDEyXU",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkNsaWVudGUgWsOpIEJpcml0YSIsImVtYWlsIjoiemViaXJpdGFAZW1haWwuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjU0NjIwMjI1LCJleHAiOjE2NTQ3MDY2MjV9.89sLfLFe18RLddoinEZ7xX4PgQSCHPeWmIiYkv5YKWo",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/sales",
+					"raw": "http://localhost:{{PORT}}/orders",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "{{PORT}}",
 					"path": [
-						"sales"
+						"orders"
 					]
 				}
 			},
@@ -273,13 +299,13 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozLCJuYW1lIjoiQ2xpZW50ZSBaw6kgQmlyaXRhIiwiZW1haWwiOiJ6ZWJpcml0YUBlbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIifSwiaWF0IjoxNjU0MDk0OTQxLCJleHAiOjE2NTQxODEzNDF9.Q-6CZPL2WO4JJ8EtZEX0FQkZ6AxeGy3wJS2U74jryyA",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkNsaWVudGUgWsOpIEJpcml0YSIsImVtYWlsIjoiemViaXJpdGFAZW1haWwuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjU0NjE1NjExLCJleHAiOjE2NTQ3MDIwMTF9.mXeTYx00cGsKWc_rwY9D2Hs_mxlMcOTv5mKKES8JsHY",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"cart\":     \n    {\n        \"totalPrice\": 103.95,\n        \"deliveryAddress\": \"Rua Curva do Vento\",\n        \"deliveryNumber\": \"13\",\n        \"sellerId\": 4\n    }, \n    \"products\": [\n        {\n            \"id\": 2,\n            \"quantity\": 10\n        },\n        {\n            \"id\": 8,\n            \"quantity\": 5\n        },\n        {\n            \"id\": 4,\n            \"quantity\": 2\n        }\n    ]    \n}",
+					"raw": "{\n    \"cart\":     \n    {\n        \"totalPrice\": 103.95,\n        \"deliveryAddress\": \"Rua Curva do Vento\",\n        \"deliveryNumber\": \"13\",\n        \"sellerId\": 2\n    }, \n    \"products\": [\n        {\n            \"id\": 2,\n            \"quantity\": 10\n        },\n        {\n            \"id\": 8,\n            \"quantity\": 5\n        },\n        {\n            \"id\": 4,\n            \"quantity\": 2\n        }\n    ]    \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -287,14 +313,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:{{PORT}}/sales",
+					"raw": "http://localhost:{{PORT}}/orders",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "{{PORT}}",
 					"path": [
-						"sales"
+						"orders"
 					]
 				}
 			},
@@ -307,7 +333,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjoyLCJuYW1lIjoiRnVsYW5hIFBlcmVpcmEiLCJlbWFpbCI6ImZ1bGFuYUBkZWxpdmVyeWFwcC5jb20iLCJyb2xlIjoic2VsbGVyIn0sImlhdCI6MTY1NDA5NzkxNywiZXhwIjoxNjU0MTg0MzE3fQ.Ewgf6lPnPHsX3ExHlz0qjR6HZGnpppB9d4fPkqjCpTQ",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywibmFtZSI6IkNsaWVudGUgWsOpIEJpcml0YSIsImVtYWlsIjoiemViaXJpdGFAZW1haWwuY29tIiwicm9sZSI6ImN1c3RvbWVyIiwiaWF0IjoxNjU0NjIwMjI1LCJleHAiOjE2NTQ3MDY2MjV9.89sLfLFe18RLddoinEZ7xX4PgQSCHPeWmIiYkv5YKWo",
 						"type": "text"
 					}
 				],
@@ -321,15 +347,34 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:{{PORT}}/sales/4",
+					"raw": "http://localhost:{{PORT}}/sale/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "{{PORT}}",
 					"path": [
-						"sales",
-						"4"
+						"sale",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Xablau",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/xablau",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"xablau"
 					]
 				}
 			},
@@ -359,12 +404,7 @@
 	"variable": [
 		{
 			"key": "PORT",
-			"value": "3301",
-			"type": "string"
-		},
-		{
-			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7ImlkIjozLCJuYW1lIjoiQ2xpZW50ZSBaw6kgQmlyaXRhIiwiZW1haWwiOiJ6ZWJpcml0YUBlbWFpbC5jb20iLCJyb2xlIjoiY3VzdG9tZXIifSwiaWF0IjoxNjU0MDkzMDk3LCJleHAiOjE2NTQxNzk0OTd9.y-iVWss_6d24kimjSE-XFzbp_YqROc4DeKs0_eKevb0",
+			"value": "3001",
 			"type": "string"
 		}
 	]
