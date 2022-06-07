@@ -6,6 +6,8 @@ const router = Router();
 
 router.get('', auth, saleController.getSales);
 
+router.get('/:id', auth, saleController.getSalesByid);
+
 router.post('', auth, saleController.create);
 
 router.patch('/:id', auth, saleController.update);

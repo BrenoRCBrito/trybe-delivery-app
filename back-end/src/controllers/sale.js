@@ -6,6 +6,13 @@ const getSales = async (req, res) => {
   return res.status(200).json({ sales });
 };
 
+const getSalesByid = async (req, res) => {
+  const { id, role } = req.user;
+  const { id: saleId } = req.params;
+  const sale = await saleServices.getSalesById(id, role, saleId);
+  return res.status(200).json({ sale });
+};
+
 const create = async (req, res) => {
   const { id: userId, role } = req.user;
   if (role !== 'customer') {
@@ -24,4 +31,4 @@ const update = async (req, res) => {
   return res.status(204).end();
 };
 
-module.exports = { getSales, create, update };
+module.exports = { getSales, getSalesByid, create, update };
