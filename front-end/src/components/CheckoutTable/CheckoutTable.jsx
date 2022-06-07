@@ -16,8 +16,7 @@ function CheckoutTable(props) {
         </tr>
       </thead>
       <tbody>
-        { products.length && products.map(({ price, name, quantity, id }, index) => {
-          const i = index + 1;
+        { products.length && products.map(({ price, name, quantity, id }, i) => {
           const subTotal = price * quantity;
 
           const priceBR = price
@@ -30,10 +29,10 @@ function CheckoutTable(props) {
               <td
                 data-testid={ `customer_checkout__element-order-table-item-number-${i}` }
               >
-                { i }
+                { i + 1 }
               </td>
               <td
-                data-testid={ `customer_checkout__element-order-table-${i}` }
+                data-testid={ `customer_checkout__element-order-table-name-${i}` }
               >
                 { name }
               </td>

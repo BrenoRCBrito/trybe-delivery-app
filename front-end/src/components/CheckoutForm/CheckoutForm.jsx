@@ -67,7 +67,7 @@ function CheckoutForm(props) {
           />
         </label>
         <button
-          data-testid="customer_checkout__input-addressNumber"
+          data-testid="customer_checkout__button-submit-order"
           type="button"
           onClick={ () => console.log('cliquei') }
           disabled={ disabled }
