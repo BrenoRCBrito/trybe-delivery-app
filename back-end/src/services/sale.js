@@ -1,22 +1,7 @@
-const { Sale, SaleProduct, User, Product } = require('../database/models');
+const { Sale, SaleProduct } = require('../database/models');
 
-const INCLUDE = [
-  {
-    model: User,
-    as: 'user',
-    attributes: ['id', 'name', 'email', 'role'],
-  },
-  {
-    model: User,
-    as: 'seller',
-    attributes: ['id', 'name', 'email', 'role'],
-  },
-  {
-    model: Product,
-    as: 'products',
-    through: { model: SaleProduct, as: 'qtd', attributes: ['quantity'] },
-    attributes: ['id', 'name', 'price'],
-  },
+const include = [
+  { all: true, attributes: { exclude: ['password'] } },
 ];
 
 const create = async (userId, products, cart) => {
@@ -34,7 +19,7 @@ const create = async (userId, products, cart) => {
     const newSaleProduct = await SaleProduct.create({ saleId, productId, quantity });
     return { ...newSaleProduct.dataValues };
   }));
-  const sale = await Sale.findOne({ where: { id: saleId }, include: INCLUDE });
+  const sale = await Sale.findOne({ where: { id: saleId }, include });
   return sale;
 };
 
@@ -42,13 +27,13 @@ const getSales = async (id, role) => {
   let sales;
   switch (role) {
     case 'customer':
-      sales = await Sale.findAll({ where: { userId: id }, include: INCLUDE });
+      sales = await Sale.findAll({ where: { userId: id }, include });
       break;
     case 'seller':
-      sales = await Sale.findAll({ where: { sellerId: id }, include: INCLUDE });
+      sales = await Sale.findAll({ where: { sellerId: id }, include });
       break;
     case 'administrator':
-      sales = await Sale.findAll({ include: { all: true } });
+      sales = await Sale.findAll({ include });
       break;
     default:
       sales = [];
