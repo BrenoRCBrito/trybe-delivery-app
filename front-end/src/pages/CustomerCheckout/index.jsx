@@ -36,7 +36,7 @@ function CustomerCheckout() {
       <h2>Finalizar Pedido</h2>
       <div>
         <CheckoutTable products={ products } />
-        <h2>
+        <h3>
           Total:
           {' '}
           <span
@@ -44,7 +44,7 @@ function CustomerCheckout() {
           >
             {totalPriceBR}
           </span>
-        </h2>
+        </h3>
       </div>
       <h2>Detalhes e Endereço para Entrega</h2>
       <div>

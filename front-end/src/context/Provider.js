@@ -19,6 +19,12 @@ function Provider({ children }) {
     }
   };
 
+  const calculateTotalPrice = (array) => {
+    const sum = array.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
+    const response = Math.floor(sum * 100) / 100;
+    return response;
+  };
+
   const initializeCart = (array) => {
     const productsToSave = array.map((product) => {
       const { price, id, ...rest } = product;
@@ -29,8 +35,7 @@ function Provider({ children }) {
       }
       return { ...rest, id, price: Number(price), quantity: Number(quantity) };
     });
-    const totalPrice = productsToSave
-      .reduce((acc, { price, quantity }) => acc + price * quantity, 0);
+    const totalPrice = calculateTotalPrice(productsToSave);
     const onlyAddedProducts = productsToSave.filter(({ quantity }) => quantity > 0);
     setProducts(productsToSave);
     setCartLS({ ...cart, userId: userData.id, totalPrice, products: onlyAddedProducts });
@@ -41,8 +46,7 @@ function Provider({ children }) {
     const index = products.findIndex(({ id: productId }) => id === productId);
     const productsToUpdate = [...products];
     productsToUpdate[index].quantity = Number(qtd);
-    const totalPrice = productsToUpdate
-      .reduce((acc, { price, quantity }) => acc + price * quantity, 0);
+    const totalPrice = calculateTotalPrice(productsToUpdate);
     const onlyAddedProducts = products.filter(({ quantity }) => quantity > 0);
     setProducts(productsToUpdate);
     setCart({ ...cart, totalPrice, products: onlyAddedProducts });
