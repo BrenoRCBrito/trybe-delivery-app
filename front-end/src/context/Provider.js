@@ -8,7 +8,6 @@ function Provider({ children }) {
   const [cart, setCart] = useState(getCartLS());
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [sale, setSale] = useState([]);
 
   const initializeUser = () => {
     const user = getUserLS();
@@ -60,8 +59,6 @@ function Provider({ children }) {
     setQuantity,
     initializeCart,
     initializeUser,
-    sale,
-    setSale,
   };
 
   return (

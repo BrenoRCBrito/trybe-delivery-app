@@ -30,7 +30,7 @@ function OrderCard(props) {
           <div
             data-testid={ `${data.date}${sale.id}` }
           >
-            {moment(sale.sale_date).format('L')}
+            {moment(sale.saleDate).format('L')}
           </div>
 
           <div
@@ -55,7 +55,7 @@ function OrderCard(props) {
 
 OrderCard.propTypes = {
   sale: PropTypes.objectOf.isRequired,
-  data: PropTypes.objectOf.isRequired,
+  data: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default OrderCard;

@@ -10,7 +10,7 @@ function CustomerOrders() {
 
   useEffect(() => {
     getSales(userData.token)
-      .then(({ sale }) => sale && setOrders(sale))
+      .then(({ sales }) => setOrders(sales))
       .catch((e) => console.log(e));
   }, [setOrders, userData.token]);
 
