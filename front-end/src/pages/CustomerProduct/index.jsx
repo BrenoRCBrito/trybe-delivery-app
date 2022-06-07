@@ -6,11 +6,11 @@ import Navbar from '../../components/Navbar/Navbar';
 import ProductsList from '../../components/ProductsList/ProductsList';
 
 function CustomerProducts() {
-  const { userData, cart, initializeCart, initializeUser } = useContext(Context);
+  const { userData, checkout, initializeCart, initializeUser } = useContext(Context);
 
   const goTo = useHistory();
 
-  const { totalPrice } = cart;
+  const { cart: { totalPrice } } = checkout;
   const totalPriceBR = totalPrice
     .toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
 
