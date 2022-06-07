@@ -1,4 +1,4 @@
-const { Sale, SaleProduct } = require('../database/models');
+const { Sale, SaleProduct, User, Product } = require('../database/models');
 
 const create = async (userId, products, cart) => {
   const { sellerId, totalPrice, deliveryAddress, deliveryNumber } = cart;
@@ -18,14 +18,33 @@ const create = async (userId, products, cart) => {
   return newSale;
 };
 
+const INCLUDE = [
+  {
+    model: User,
+    as: 'user',
+    attributes: ['id', 'name', 'email', 'role'],
+  },
+  {
+    model: User,
+    as: 'seller',
+    attributes: ['id', 'name', 'email', 'role'],
+  },
+  {
+    model: Product,
+    as: 'products',
+    through: { model: SaleProduct, as: 'qtd', attributes: ['quantity'] },
+    attributes: ['id', 'name', 'price'],
+  },
+];
+
 const getSales = async (id, role) => {
   let sales;
   switch (role) {
     case 'customer':
-      sales = await Sale.findAll({ where: { userId: id }, include: { all: true } });
+      sales = await Sale.findAll({ where: { userId: id }, include: INCLUDE });
       break;
     case 'seller':
-      sales = await Sale.findAll({ where: { sellerId: id }, include: { all: true } });
+      sales = await Sale.findAll({ where: { sellerId: id }, include: INCLUDE });
       break;
     case 'administrator':
       sales = await Sale.findAll({ include: { all: true } });
