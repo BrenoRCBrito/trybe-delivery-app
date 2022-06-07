@@ -16,7 +16,7 @@ function Navbar() {
         >
           Produtos
         </Link>
-        {window.location.href.contains('customer') && (
+        {window.location.href.includes('customer') && (
           <Link
             data-testid="customer_products__element-navbar-link-orders"
             to="/customer/orders"
