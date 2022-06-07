@@ -42,6 +42,25 @@ const getSales = async (id, role) => {
   return sales;
 };
 
+const getSalesById = async (id, role, saleId) => {
+  let sales;
+  switch (role) {
+    case 'customer':
+      sales = await Sale.findAll({ where: { userId: id, id: saleId }, include });
+      break;
+    case 'seller':
+      sales = await Sale.findAll({ where: { sellerId: id, id: saleId }, include });
+      break;
+    case 'administrator':
+      sales = await Sale.findAll({ include });
+      break;
+    default:
+      sales = [];
+      break;
+  }
+  return sales;
+};
+
 const update = async (id, role, status) => {
   if (role !== 'customer' && role !== 'seller') {
     const unauthorizedError = { status: 401, error: 'Unauthorized' };
@@ -55,4 +74,4 @@ const update = async (id, role, status) => {
   await sale.update({ ...sale, status }, { where: { id } });
 };
 
-module.exports = { getSales, create, update };
+module.exports = { getSales, getSalesById, create, update };

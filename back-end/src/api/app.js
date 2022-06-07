@@ -30,8 +30,6 @@ app.use('/sale', saleRouter);
 
 app.use('/images', express.static('./public/images'));
 
-app.use('/orders', saleRouter);
-
 app.use('*', notFound);
 
 app.use(error);
