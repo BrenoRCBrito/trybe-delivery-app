@@ -7,7 +7,7 @@ function OrderCard(props) {
   const { sale, data } = props;
 
   return (
-    <Link to={ `/${data.role}/${sale.id}` }>
+    <Link to={ `/${data.role}/orders/${sale.id}` }>
       <div>
         <div>
           <label htmlFor={ `${data.html}${sale.id}` }>
