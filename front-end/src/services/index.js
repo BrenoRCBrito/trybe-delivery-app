@@ -58,7 +58,6 @@ export {
   getProducts,
   getSales,
   getSale,
-  getOrders,
   getSellers,
   postOrder,
 };
