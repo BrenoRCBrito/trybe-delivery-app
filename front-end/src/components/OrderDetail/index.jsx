@@ -63,7 +63,7 @@ function OrderDetail(props) {
                 <button
                   disabled={ sale.status === 'Entregue'
                 || sale.status === inProgress
-                || sale.stauts === 'Preparando' }
+                || sale.status === 'Preparando' }
                   data-testid={ data.preparingBtn }
                   onClick={ () => handleSubmit('Preparando') }
                   type="button"
