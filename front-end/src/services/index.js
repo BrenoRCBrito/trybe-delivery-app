@@ -40,6 +40,19 @@ function getSale(token, id) {
     .catch((err) => err.response.status);
 }
 
+function postAdminRegister({ userEmail, userName, userPassword, userRole, token }) {
+  return axios
+    .post('http://localhost:3001/register/admin', {
+      email: userEmail,
+      name: userName,
+      password: userPassword,
+      role: userRole,
+    },
+    { headers: { Authorization: token } })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
 function getSellers(token) {
   return axios.get('http://localhost:3001/user', { headers: { Authorization: token } })
     .then((res) => res.data)
@@ -53,6 +66,7 @@ function postOrder(token, cart) {
 }
 
 export {
+  postAdminRegister,
   postLogin,
   postRegister,
   getProducts,
