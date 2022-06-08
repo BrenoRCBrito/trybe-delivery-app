@@ -19,6 +19,18 @@ function OrderDetail() {
     // eslint-disable-next-line
   }, [id, userData.token]);
 
+  const sellerName = 'customer_order_details__element-order-details-label-seller-name';
+  const orderDate = 'customer_order_details__element-order-details-label-order-date';
+  const delStatus = 'customer_order_details__element-order-details-label-delivery-status';
+
+  const totalPrice = sale.totalPrice
+    ? Number(sale.totalPrice).toLocaleString('pt-br', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+    : '0,00';
+
   return (
     <div>
       { sale.id && (
@@ -30,23 +42,26 @@ function OrderDetail() {
               { `PEDIDO 000${sale.id}` }
             </p>
             <p
-              data-testid={ `customer_order_details__element
-              -order-details-label-seller-name` }
+              data-testid={ sellerName }
             >
               { `P.Vend: ${sale.seller.name}` }
             </p>
             <p
-              data-testid="customer_order_details__element-order-details-label-order-date"
+              data-testid={ orderDate }
             >
               {moment(sale.saleDate).locale('pt-br').format('DD/MM/YYYY') }
             </p>
             <p
-              data-testid={ `customer_order_details__element-order
-          -details-label-delivery-status` }
+              data-testid={ delStatus }
             >
               { sale.status }
             </p>
             <button
+              disabled={
+                sale.status === 'Pendente'
+                || sale.status === 'Preparando'
+                || sale.status === 'Entregue'
+              }
               data-testid="customer_order_details__button-delivery-check"
               type="button"
             >
@@ -65,46 +80,61 @@ function OrderDetail() {
               </tr>
             </thead>
             <tbody>
-              { sale.products.map((product, index) => (
-                <tr key={ product.id }>
-                  <td
-                    data-testid={ `customer_order_details__element
-                  -order-table-item-number-${index}` }
-                  >
-                    { index + 1 }
-                  </td>
-                  <td
-                    data-testid={ `customer_order_details__element
-                  -order-table-name-${index}` }
-                  >
-                    { product.name }
-                  </td>
-                  <td
-                    data-testid={ `customer_order_details__element
-                  -order-table-quantity-${index}` }
-                  >
-                    { product.SaleProduct.quantity }
-                  </td>
-                  <td
-                    data-testid={ `customer_order_details__element
-                  -order-table-unit-price-${index}` }
-                  >
-                    { product.price }
-                  </td>
-                  <td
-                    data-testid={ `customer_order_details__element
-                  -order-table-sub-total-${index}` }
-                  >
-                    { product.price * product.SaleProduct.quantity }
-                  </td>
-                </tr>
-              )) }
+              { sale.products.map((product, i) => {
+                const subTotal = product.price * product.SaleProduct.quantity;
+                const subTotalBR = subTotal.toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                });
+                return (
+                  <tr key={ i }>
+                    <td
+                      data-testid={
+                        `customer_order_details__element-order-table-item-number-${i}`
+                      }
+                    >
+                      { i + 1 }
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_order_details__element-order-table-name-${i}`
+                      }
+                    >
+                      { product.name }
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_order_details__element-order-table-quantity-${i}`
+                      }
+                    >
+                      { product.SaleProduct.quantity }
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_order_details__element-order-table-unit-price-${i}`
+                      }
+                    >
+                      { product.price }
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_order_details__element-order-table-sub-total-${i}`
+                      }
+                    >
+                      { subTotalBR }
+                    </td>
+                  </tr>
+                );
+              }) }
             </tbody>
           </table>
-          <div
-            data-testid="customer_order_details__element-order-total-price"
-          >
-            { `Total: ${sale.totalPrice}` }
+          <div>
+            <span>Total: R$ </span>
+            <span
+              data-testid="customer_order_details__element-order-total-price"
+            >
+              { totalPrice }
+            </span>
           </div>
           {/* <h1>ola</h1> */}
         </div>
