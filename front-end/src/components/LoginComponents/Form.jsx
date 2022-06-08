@@ -14,7 +14,7 @@ function LoginForm() {
   const [userPassword, setUserPassword] = useState('');
   const [response, setResponse] = useState();
   const [loginStatus, setLoginStatus] = useState(false);
-  const { setUserData } = useContext(Context);
+  const { userData, setUserData, initializeUser } = useContext(Context);
 
   const goTo = useHistory();
 
@@ -36,10 +36,13 @@ function LoginForm() {
   };
 
   useEffect(() => {
-    if (loginStatus) {
+    initializeUser();
+    if (!userData.token && loginStatus) {
       setUserLS(response);
       setUserData(response);
-      switch (response.role) {
+    }
+    if (userData.role) {
+      switch (userData.role) {
       case 'seller':
         goTo.push('/seller/orders');
         break;
@@ -50,7 +53,7 @@ function LoginForm() {
         goTo.push('/customer/products');
       }
     }
-  }, [goTo, loginStatus, response, setUserData]);
+  }, [goTo, userData, loginStatus, response, setUserData, initializeUser]);
 
   return (
     <div>

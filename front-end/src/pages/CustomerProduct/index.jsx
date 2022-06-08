@@ -24,7 +24,7 @@ function CustomerProducts() {
         .catch((e) => console.log(e));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [userData.token]);
 
   return (
     <div>

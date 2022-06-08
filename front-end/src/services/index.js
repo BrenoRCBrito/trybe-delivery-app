@@ -28,34 +28,69 @@ function getProducts(token) {
     .catch((err) => err.response.status);
 }
 
-function getOrders(token) {
-  return axios.get('http://localhost:3001/orders', { headers: { Authorization: token } })
+function getSales(token) {
+  return axios
+    .get('http://localhost:3001/sale', { headers: { Authorization: token } })
     .then((res) => res.data)
     .catch((err) => err.response.status);
 }
 
-// too many parameters
-function postAdminRegister({ userEmail, userName, userPassword, userRole, token }) {
+function getSale(token, id) {
   return axios
-    .post('http://localhost:3001/register/admin', {
-      email: userEmail,
-      name: userName,
-      password: userPassword,
-      role: userRole,
-    },
-    { headers: { Authorization: token } })
+    .get(`http://localhost:3001/sale/${id}`, {
+      headers: { Authorization: token },
+    })
+    .then((res) => res.data.sale)
+    .catch((err) => err.response.status);
+}
+
+function postAdminRegister({
+  userEmail,
+  userName,
+  userPassword,
+  userRole,
+  token,
+}) {
+  return axios
+    .post(
+      'http://localhost:3001/register/admin',
+      {
+        email: userEmail,
+        name: userName,
+        password: userPassword,
+        role: userRole,
+      },
+      { headers: { Authorization: token } },
+    )
     .then((res) => res.data)
     .catch((err) => err.response.status);
 }
 
 function getSellers(token) {
-  return axios.get('http://localhost:3001/user', { headers: { Authorization: token } })
+  return axios
+    .get('http://localhost:3001/user', { headers: { Authorization: token } })
     .then((res) => res.data)
     .catch((err) => err.response.status);
 }
 
-function postOrder(token, cart) {
-  return axios.post('http://localhost:3001/sale', cart, { headers: { Authorization: token } })
+function postSale(token, cart) {
+  return axios
+    .post('http://localhost:3001/sale', cart, {
+      headers: { Authorization: token },
+    })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
+function updateSale(token, saleId, status) {
+  return axios
+    .patch(
+      `http://localhost:3001/sale/${saleId}`,
+      {
+        status,
+      },
+      { headers: { Authorization: token } },
+    )
     .then((res) => res.data)
     .catch((err) => err.response.status);
 }
@@ -65,7 +100,9 @@ export {
   postLogin,
   postRegister,
   getProducts,
-  getOrders,
+  getSales,
+  getSale,
   getSellers,
-  postOrder,
+  postSale,
+  updateSale,
 };

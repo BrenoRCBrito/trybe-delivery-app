@@ -4,19 +4,30 @@ import Context from '../../context/Context';
 import { clearLocalStorage } from '../../services/localstorage';
 
 function Navbar() {
-  const { userData } = useContext(Context);
+  const { userData, setUserData } = useContext(Context);
   const goTo = useHistory();
-
+  const isCustomerPage = window.location.href.includes('customer');
+  const isSellerPage = window.location.href.includes('seller');
   return (
     <nav>
       <div>
         <Link
-          data-testid="customer_products__element-navbar-link-products"
-          to="/customer/products"
+          data-testid={
+            isCustomerPage
+              ? 'customer_products__element-navbar-link-products'
+              : 'customer_products__element-navbar-link-orders'
+          }
+          to={ () => {
+            if (isCustomerPage) return '/customer/products';
+            if (isSellerPage) return '/seller/orders';
+            return 'admin/manage';
+          } }
         >
-          Produtos
+          {isCustomerPage && 'PRODUTOS'}
+          {isSellerPage && 'PEDIDOS'}
+          {window.location.href.includes('admin') && 'GERENCIAR USUÁRIOS'}
         </Link>
-        {window.location.href.includes('customer') && (
+        {isCustomerPage && (
           <Link
             data-testid="customer_products__element-navbar-link-orders"
             to="/customer/orders"
@@ -32,6 +43,7 @@ function Navbar() {
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
             clearLocalStorage();
+            setUserData({});
             goTo.push('/login');
           } }
         >

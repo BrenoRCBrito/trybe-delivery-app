@@ -1,18 +1,22 @@
 import React, { useContext, useEffect } from 'react';
 import Context from '../../context/Context';
-import { getOrders } from '../../services';
+import { getSales } from '../../services';
 import Navbar from '../../components/Navbar/Navbar';
 import Orders from '../../components/OrdersList';
 import data from '../../components/utils/orderData';
 
 function SellerOrders() {
-  const { userData, setOrders } = useContext(Context);
+  const { userData, setOrders, initializeUser } = useContext(Context);
 
   useEffect(() => {
-    getOrders(userData.token)
-      .then(({ sale }) => sale && setOrders(sale))
-      .catch((e) => console.log(e));
-  }, [setOrders, userData.token]);
+    initializeUser();
+    if (userData.token) {
+      getSales(userData.token)
+        .then(({ sales }) => sales && setOrders(sales))
+        .catch((e) => console.log(e));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
 
   return (
     <div>

@@ -7,6 +7,8 @@ import Admin from './Admin';
 import CustomerOrders from './CustomerOrders';
 import SellerOrders from './SellerOrders';
 import CustomerCheckout from './CustomerCheckout';
+import OrderDetails from './OrderDetails';
+import data from '../components/utils/detailsData';
 
 function Pages() {
   return (
@@ -19,9 +21,14 @@ function Pages() {
       <Route
         exact
         path="/customer/orders/:id"
-        render={ ({ match }) => <CustomerOrders match={ match } /> }
+        render={ () => <OrderDetails data={ data.Customer } /> }
       />
       <Route exact path="/seller/orders" component={ SellerOrders } />
+      <Route
+        exact
+        path="/seller/orders/:id"
+        render={ () => <OrderDetails data={ data.Seller } /> }
+      />
       <Route exact path="/customer/checkout" component={ CustomerCheckout } />
       <Route render={ () => <Redirect to={ { pathname: '/login' } } /> } />
     </Switch>

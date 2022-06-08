@@ -9,7 +9,7 @@ function Orders(props) {
 
   return (
     <div>
-      { orders
+      { orders.length > 0
         && orders.map(
           (sale) => <OrderCard key={ sale.id } sale={ sale } data={ data } />,
         )}
@@ -19,7 +19,7 @@ function Orders(props) {
 }
 
 Orders.propTypes = {
-  data: PropTypes.objectOf.isRequired,
+  data: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default Orders;

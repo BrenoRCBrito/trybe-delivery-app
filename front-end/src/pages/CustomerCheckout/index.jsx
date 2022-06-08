@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
-import { getSellers, postOrder } from '../../services';
+import { getSellers, postSale } from '../../services';
 import CheckoutTable from '../../components/CheckoutTable/CheckoutTable';
 import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
 import { setCartLS, clearCartLS } from '../../services/localstorage';
@@ -40,7 +40,8 @@ function CustomerCheckout() {
         })
         .catch((e) => console.log(e));
     }
-  }, [initializeUser, userData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
 
   const handleChange = ({ target: { name, value } }) => {
     setCheckout({ ...checkout, cart: { ...checkout.cart, [name]: value } });
@@ -58,10 +59,9 @@ function CustomerCheckout() {
   };
 
   const handleSubmit = () => {
-    postOrder(userData.token, checkout)
+    postSale(userData.token, checkout)
       .then((response) => {
         if (response.sale.id) {
-          const { sale: { id } } = response;
           setCheckout({
             cart: {
               totalPrice: 0,
@@ -72,7 +72,7 @@ function CustomerCheckout() {
             products: [],
           });
           clearCartLS();
-          goTo.push(`/customer/orders/${id}`);
+          goTo.push(`/customer/orders/${response.sale.id}`);
         }
       })
       .catch((e) => console.log(e));

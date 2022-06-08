@@ -5,9 +5,16 @@ import { Link } from 'react-router-dom';
 
 function OrderCard(props) {
   const { sale, data } = props;
+  const date = moment(sale.saleDate).locale('pt-br').format('DD/MM/YYYY');
+  const totalPrice = Number(sale.totalPrice)
+    .toLocaleString('pt-br', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
   return (
-    <Link to={ `/${data.role}/${sale.id}` }>
+    <Link to={ `/${data.role}/orders/${sale.id}` }>
       <div>
         <div>
           <label htmlFor={ `${data.html}${sale.id}` }>
@@ -30,14 +37,12 @@ function OrderCard(props) {
           <div
             data-testid={ `${data.date}${sale.id}` }
           >
-            {moment(sale.sale_date).format('L')}
+            { date }
           </div>
 
-          <div
-            data-testid={ `${data.price}${sale.id}` }
-          >
-            {sale.totalPrice
-              .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+          <div>
+            <span>R$ </span>
+            <span data-testid={ `${data.price}${sale.id}` }>{ totalPrice }</span>
           </div>
 
           { data.address && (
@@ -54,8 +59,15 @@ function OrderCard(props) {
 }
 
 OrderCard.propTypes = {
-  sale: PropTypes.objectOf.isRequired,
-  data: PropTypes.objectOf.isRequired,
+  data: PropTypes.objectOf(PropTypes.string).isRequired,
+  sale: PropTypes.shape({
+    deliveryAddress: PropTypes.string,
+    deliveryNumber: PropTypes.string,
+    id: PropTypes.number,
+    saleDate: PropTypes.string,
+    status: PropTypes.string,
+    totalPrice: PropTypes.string,
+  }).isRequired,
 };
 
 export default OrderCard;

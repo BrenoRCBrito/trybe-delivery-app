@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, _Sequelize) => {
     await queryInterface.bulkInsert(
-      "sales_products",
+      "salesProducts",
       [
         {
           sale_id: 1,
@@ -19,6 +19,6 @@ module.exports = {
   },
 
   down: async (queryInterface, _Sequelize) => {
-    await queryInterface.bulkDelete("sales_products", null, {});
+    await queryInterface.bulkDelete("salesProducts", null, {});
   },
 };
