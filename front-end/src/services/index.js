@@ -48,10 +48,24 @@ function postAdminRegister({ userEmail, userName, userPassword, userRole, token 
     .catch((err) => err.response.status);
 }
 
+function getSellers(token) {
+  return axios.get('http://localhost:3001/user', { headers: { Authorization: token } })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
+function postOrder(token, cart) {
+  return axios.post('http://localhost:3001/sale', cart, { headers: { Authorization: token } })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
 export {
   postAdminRegister,
   postLogin,
   postRegister,
   getProducts,
   getOrders,
+  getSellers,
+  postOrder,
 };

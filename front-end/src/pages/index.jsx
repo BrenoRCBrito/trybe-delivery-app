@@ -16,6 +16,11 @@ function Pages() {
       <Route exact path="/customer/products" component={ CustomerProduct } />
       <Route exact path="/admin/manage" component={ Admin } />
       <Route exact path="/customer/orders" component={ CustomerOrders } />
+      <Route
+        exact
+        path="/customer/orders/:id"
+        render={ ({ match }) => <CustomerOrders match={ match } /> }
+      />
       <Route exact path="/seller/orders" component={ SellerOrders } />
       <Route exact path="/customer/checkout" component={ CustomerCheckout } />
       <Route render={ () => <Redirect to={ { pathname: '/login' } } /> } />
