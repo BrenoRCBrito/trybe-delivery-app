@@ -30,6 +30,13 @@ const registerAdminSchema = registerSchema.keys({
   role: joi.string().valid('customer', 'administrator', 'seller').required(),
 });
 
+const updateSaleSchema = joi.object({
+  status: joi
+    .string()
+    .valid('Preparando', 'Em Trânsito', 'Pendente', 'Entregue')
+    .required(),
+});
+
 const checkLogin = async (body) =>
   loginSchema.validateAsync(body, { convert: true });
 
@@ -39,4 +46,13 @@ const checkRegister = async (body) =>
 const checkRegisterAdmin = async (body) =>
   registerAdminSchema.validateAsync(body, { convert: true });
 
-module.exports = { checkLogin, formatError, checkRegister, checkRegisterAdmin };
+const checkUpdateSale = async (body) =>
+  updateSaleSchema.validateAsync(body, { convert: true });
+
+module.exports = {
+  checkLogin,
+  formatError,
+  checkRegister,
+  checkRegisterAdmin,
+  checkUpdateSale,
+};
