@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 // import { useHistory } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
-import { getSellers, postOrder } from '../../services';
+import { getSellers, postSale } from '../../services';
 import CheckoutTable from '../../components/CheckoutTable/CheckoutTable';
 import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
 import { setCartLS, clearCartLS } from '../../services/localstorage';
@@ -59,7 +59,7 @@ function CustomerCheckout() {
   };
 
   const handleSubmit = () => {
-    postOrder(userData.token, checkout)
+    postSale(userData.token, checkout)
       .then((response) => {
         if (response.sale.id) {
           setCheckout({
