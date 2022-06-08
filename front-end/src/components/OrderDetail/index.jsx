@@ -1,13 +1,16 @@
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Context from '../../context/Context';
-import { getSale } from '../../services';
+import { getSale, updateSale } from '../../services';
 
-function OrderDetail() {
+function OrderDetail(props) {
   const { userData, initializeUser } = useContext(Context);
   const { id } = useParams();
   const [sale, setSale] = useState({});
+  const { data } = props;
+  const [updateStatus, setUpdateStatus] = useState(false);
 
   useEffect(() => {
     initializeUser();
@@ -17,11 +20,13 @@ function OrderDetail() {
         .catch((e) => console.log(e));
     }
     // eslint-disable-next-line
-  }, [id, userData.token]);
+  }, [id, userData.token, updateStatus]);
 
-  const sellerName = 'customer_order_details__element-order-details-label-seller-name';
-  const orderDate = 'customer_order_details__element-order-details-label-order-date';
-  const delStatus = 'customer_order_details__element-order-details-label-delivery-status';
+  const handleSubmit = (status) => {
+    updateSale(userData.token, id, status)
+      .then(() => setUpdateStatus(!updateStatus))
+      .catch((e) => console.log(e));
+  };
 
   const totalPrice = sale.totalPrice
     ? Number(sale.totalPrice).toLocaleString('pt-br', {
@@ -31,42 +36,50 @@ function OrderDetail() {
     })
     : '0,00';
 
+  const inProgress = 'Em Trânsito';
+
   return (
     <div>
       { sale.id && (
         <div>
           <div>
-            <p
-              data-testid="customer_order_details__element-order-details-label-order-id"
-            >
-              { `PEDIDO 000${sale.id}` }
-            </p>
-            <p
-              data-testid={ sellerName }
-            >
-              { `P.Vend: ${sale.seller.name}` }
-            </p>
-            <p
-              data-testid={ orderDate }
-            >
+            <p data-testid={ data.id }>{ `PEDIDO 000${sale.id}` }</p>
+            <p data-testid={ data.seller }>{ `P.Vend: ${sale.seller.name}` }</p>
+            <p data-testid={ data.date }>
               {moment(sale.saleDate).locale('pt-br').format('DD/MM/YYYY') }
             </p>
-            <p
-              data-testid={ delStatus }
-            >
-              { sale.status }
-            </p>
-            <button
-              disabled={
-                sale.status === 'Pendente'
-                || sale.status === 'Preparando'
-                || sale.status === 'Entregue'
-              }
-              data-testid="customer_order_details__button-delivery-check"
-              type="button"
-            >
-              MARCAR COMO ENTREGUE
-            </button>
+            <p data-testid={ data.status }>{ sale.status }</p>
+            { data.role === 'customer' && (
+              <button
+                disabled={ sale.status !== inProgress }
+                data-testid={ data.button }
+                onClick={ () => handleSubmit('Entregue') }
+                type="button"
+              >
+                MARCAR COMO ENTREGUE
+              </button>)}
+            { data.role === 'seller' && (
+              <div>
+                <button
+                  disabled={ sale.status === 'Entregue'
+                || sale.status === inProgress
+                || sale.stauts === 'Preparando' }
+                  data-testid={ data.preparingBtn }
+                  onClick={ () => handleSubmit('Preparando') }
+                  type="button"
+                >
+                  PREPARAR PEDIDO
+                </button>
+                <button
+                  disabled={ sale.status !== 'Preparando' }
+                  data-testid={ data.dispatchBtn }
+                  onClick={ () => handleSubmit(inProgress) }
+                  type="button"
+                >
+                  SAIU PARA ENTREGA
+                </button>
+              </div>
+            )}
           </div>
 
           <table>
@@ -88,39 +101,19 @@ function OrderDetail() {
                 });
                 return (
                   <tr key={ i }>
-                    <td
-                      data-testid={
-                        `customer_order_details__element-order-table-item-number-${i}`
-                      }
-                    >
+                    <td data-testid={ `${data.tItem}${i}` }>
                       { i + 1 }
                     </td>
-                    <td
-                      data-testid={
-                        `customer_order_details__element-order-table-name-${i}`
-                      }
-                    >
+                    <td data-testid={ `${data.tName}${i}` }>
                       { product.name }
                     </td>
-                    <td
-                      data-testid={
-                        `customer_order_details__element-order-table-quantity-${i}`
-                      }
-                    >
+                    <td data-testid={ `${data.tQuantity}${i}` }>
                       { product.SaleProduct.quantity }
                     </td>
-                    <td
-                      data-testid={
-                        `customer_order_details__element-order-table-unit-price-${i}`
-                      }
-                    >
+                    <td data-testid={ `${data.tPrice}${i}` }>
                       { product.price }
                     </td>
-                    <td
-                      data-testid={
-                        `customer_order_details__element-order-table-sub-total-${i}`
-                      }
-                    >
+                    <td data-testid={ `${data.tTotal}${i}` }>
                       { subTotalBR }
                     </td>
                   </tr>
@@ -131,17 +124,20 @@ function OrderDetail() {
           <div>
             <span>Total: R$ </span>
             <span
-              data-testid="customer_order_details__element-order-total-price"
+              data-testid={ data.total }
             >
               { totalPrice }
             </span>
           </div>
-          {/* <h1>ola</h1> */}
         </div>
       )}
     </div>
 
   );
 }
+
+OrderDetail.propTypes = {
+  data: PropTypes.objectOf(PropTypes.string).isRequired,
+};
 
 export default OrderDetail;
