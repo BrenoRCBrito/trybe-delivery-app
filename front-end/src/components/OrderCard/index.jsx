@@ -5,6 +5,13 @@ import { Link } from 'react-router-dom';
 
 function OrderCard(props) {
   const { sale, data } = props;
+  const date = moment(sale.saleDate).locale('pt-br').format('DD/MM/YYYY');
+  const totalPrice = Number(sale.totalPrice)
+    .toLocaleString('pt-br', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
   return (
     <Link to={ `/${data.role}/orders/${sale.id}` }>
@@ -30,14 +37,12 @@ function OrderCard(props) {
           <div
             data-testid={ `${data.date}${sale.id}` }
           >
-            {moment(sale.saleDate).format('L')}
+            { date }
           </div>
 
-          <div
-            data-testid={ `${data.price}${sale.id}` }
-          >
-            {sale.totalPrice
-              .toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+          <div>
+            <span>R$ </span>
+            <span data-testid={ `${data.price}${sale.id}` }>{ totalPrice }</span>
           </div>
 
           { data.address && (

@@ -6,13 +6,17 @@ import Orders from '../../components/OrdersList';
 import data from '../../components/utils/orderData';
 
 function CustomerOrders() {
-  const { userData, setOrders } = useContext(Context);
+  const { userData, setOrders, initializeUser } = useContext(Context);
 
   useEffect(() => {
-    getSales(userData.token)
-      .then(({ sales }) => setOrders(sales))
-      .catch((e) => console.log(e));
-  }, [setOrders, userData.token]);
+    initializeUser();
+    if (userData.token) {
+      getSales(userData.token)
+        .then(({ sales }) => setOrders(sales))
+        .catch((e) => console.log(e));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData.token]);
 
   return (
     <div>

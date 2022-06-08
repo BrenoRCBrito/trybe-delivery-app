@@ -19,8 +19,9 @@ const options = {
   password: process.env.MYSQL_PASSWORD || 'password',
   dialect: 'mysql',
   dialectOptions: {
-    timezone: 'Z',
+    timezone: 'Z',    
   },
+  // timezone: '-03:00',
   logging: false,
 };
 

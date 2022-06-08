@@ -40,7 +40,8 @@ function CustomerCheckout() {
         })
         .catch((e) => console.log(e));
     }
-  }, [initializeUser, userData]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userData]);
 
   const handleChange = ({ target: { name, value } }) => {
     setCheckout({ ...checkout, cart: { ...checkout.cart, [name]: value } });
@@ -61,7 +62,6 @@ function CustomerCheckout() {
     postOrder(userData.token, checkout)
       .then((response) => {
         if (response.sale.id) {
-          const { sale: { id } } = response;
           setCheckout({
             cart: {
               totalPrice: 0,
@@ -72,7 +72,7 @@ function CustomerCheckout() {
             products: [],
           });
           clearCartLS();
-          goTo.push(`/customer/orders/${id}`);
+          goTo.push(`/customer/orders/${response.sale.id}`);
         }
       })
       .catch((e) => console.log(e));

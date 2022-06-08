@@ -4,7 +4,7 @@ import Context from '../../context/Context';
 import { clearLocalStorage } from '../../services/localstorage';
 
 function Navbar() {
-  const { userData } = useContext(Context);
+  const { userData, setUserData } = useContext(Context);
   const goTo = useHistory();
 
   return (
@@ -32,6 +32,7 @@ function Navbar() {
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
             clearLocalStorage();
+            setUserData({});
             goTo.push('/login');
           } }
         >

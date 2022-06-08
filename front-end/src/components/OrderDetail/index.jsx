@@ -5,15 +5,19 @@ import Context from '../../context/Context';
 import { getSale } from '../../services';
 
 function OrderDetail() {
-  const { userData } = useContext(Context);
+  const { userData, initializeUser } = useContext(Context);
   const { id } = useParams();
   const [sale, setSale] = useState({});
 
   useEffect(() => {
-    getSale(userData.token, id)
-      .then((order) => setSale(order[0]))
-      .catch((e) => console.log(e));
-  }, [id, sale, setSale, userData.token]);
+    initializeUser();
+    if (userData.token) {
+      getSale(userData.token, id)
+        .then((order) => setSale(order[0]))
+        .catch((e) => console.log(e));
+    }
+    // eslint-disable-next-line
+  }, [id, userData.token]);
 
   return (
     <div>
@@ -34,7 +38,7 @@ function OrderDetail() {
             <p
               data-testid="customer_order_details__element-order-details-label-order-date"
             >
-              { moment(sale.saleDate).format('L') }
+              {moment(sale.saleDate).locale('pt-br').format('DD/MM/YYYY') }
             </p>
             <p
               data-testid={ `customer_order_details__element-order
@@ -65,31 +69,31 @@ function OrderDetail() {
                 <tr key={ product.id }>
                   <td
                     data-testid={ `customer_order_details__element
-                  -order-table-item-number-${product.id}` }
+                  -order-table-item-number-${index}` }
                   >
-                    { index }
+                    { index + 1 }
                   </td>
                   <td
                     data-testid={ `customer_order_details__element
-                  -order-table-name-${product.id}` }
+                  -order-table-name-${index}` }
                   >
                     { product.name }
                   </td>
                   <td
                     data-testid={ `customer_order_details__element
-                  -order-table-quantity-${product.id}` }
+                  -order-table-quantity-${index}` }
                   >
                     { product.SaleProduct.quantity }
                   </td>
                   <td
                     data-testid={ `customer_order_details__element
-                  -order-table-unit-price-${product.id}` }
+                  -order-table-unit-price-${index}` }
                   >
                     { product.price }
                   </td>
                   <td
                     data-testid={ `customer_order_details__element
-                  -order-table-sub-total-${product.id}` }
+                  -order-table-sub-total-${index}` }
                   >
                     { product.price * product.SaleProduct.quantity }
                   </td>
@@ -98,7 +102,7 @@ function OrderDetail() {
             </tbody>
           </table>
           <div
-            data-testid={ `customer_order_details__element-order-total-price-${sale.id}` }
+            data-testid="customer_order_details__element-order-total-price"
           >
             { `Total: ${sale.totalPrice}` }
           </div>
