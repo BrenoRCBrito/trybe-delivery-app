@@ -56,45 +56,54 @@ function LoginForm() {
   }, [goTo, loginStatus, response, setUser, initializeUser, token, role]);
 
   return (
-    <div>
-      <img alt="imagem do nosso logo" />
-      <form>
-        <GenericInput
-          data={ inputsDatas.Login }
-          value={ userEmail }
-          handler={ handleInputLogin }
-        />
+    <form
+      className={ `flex flex-col w-[26.563rem] h-[27.75rem] items-center
+      justify-evenly border border-[#B1C2BE] bg-[#EAF1EF] shadow-login` }
+    >
+      <GenericInput
+        data={ inputsDatas.Login }
+        value={ userEmail }
+        handler={ handleInputLogin }
+      />
 
-        <GenericInput
-          data={ inputsDatas.Password }
-          value={ userPassword }
-          handler={ handleInputPassword }
-        />
+      <GenericInput
+        data={ inputsDatas.Password }
+        value={ userPassword }
+        handler={ handleInputPassword }
+      />
 
-        <button
-          type="submit"
-          data-testid="common_login__button-login"
-          disabled={ validateLogin(userEmail, userPassword) }
-          onClick={ (event) => handleStatusLogin(event) }
-        >
-          LOGIN
-        </button>
+      <button
+        type="submit"
+        data-testid="common_login__button-login"
+        disabled={ validateLogin(userEmail, userPassword) }
+        onClick={ (event) => handleStatusLogin(event) }
+        className={ `w-[23.125rem] h-[3.688rem] rounded-[10px] bg-[#036B52]
+        text-2xl font-normal text-[#F2FFFC]
+        transition duration-500
+        enabled:hover:bg-transparent enabled:hover:text-[#036B52] enabled:hover:border-2
+        enabled:border-[#036B52] disabled:opacity-30 disabled:bg-[#034b3ac9]
+        disabled:cursor-not-allowed` }
+      >
+        LOGIN
+      </button>
 
-        <button
-          type="submit"
-          data-testid="common_login__button-register"
-          onClick={ () => goTo.push('/register') }
-        >
-          Ainda não tenho conta
-        </button>
+      <button
+        type="submit"
+        data-testid="common_login__button-register"
+        onClick={ () => goTo.push('/register') }
+        className={ `w-[23.125rem] h-[3.688rem] rounded-[10px] bg-transparent
+        text-2xl font-normal text-[#036B52] border-2 border-[#036B52]
+        transition duration-500 hover:bg-[#036B52] hover:text-[#F2FFFC]` }
+      >
+        Ainda não tenho conta
+      </button>
 
-        {response === StatusCodes.NOT_FOUND && (
-          <span data-testid="common_login__element-invalid-email">
-            Usuário não encontrado
-          </span>
-        )}
-      </form>
-    </div>
+      {response === StatusCodes.NOT_FOUND && (
+        <span data-testid="common_login__element-invalid-email">
+          Usuário não encontrado
+        </span>
+      )}
+    </form>
   );
 }
 
