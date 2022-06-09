@@ -32,8 +32,8 @@ function AdminForm() {
 
   return (
     <div id="admin-form-container">
-      <h1>NavBar Lindona</h1>
       <div>
+        <h2>Cadastrar novo usuário</h2>
         <GenericInput
           data={ adminData.Name }
           value={ userName }
@@ -66,13 +66,6 @@ function AdminForm() {
         >
           Cadastrar
         </button>
-      </div>
-      <div>
-        <div data-testid="admin_manage__element-user-table-item-number-4">o</div>
-        <div data-testid="admin_manage__element-user-table-name-4">o</div>
-        <div data-testid="admin_manage__element-user-table-email-4">o</div>
-        <div data-testid="admin_manage__element-user-table-role-4">o</div>
-        <div data-testid="admin_manage__element-user-table-remove-4">o</div>
       </div>
     </div>
   );
