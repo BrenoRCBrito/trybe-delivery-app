@@ -3,15 +3,61 @@ import PropTypes from 'prop-types';
 
 function AdminUsersTable(props) {
   const { users, handleRemoveUser } = props;
-  console.log(users);
-  handleRemoveUser('xablau');
+
   return (
     <div>
-      <div data-testid="admin_manage__element-user-table-item-number-4">o</div>
-      <div data-testid="admin_manage__element-user-table-name-4">o</div>
-      <div data-testid="admin_manage__element-user-table-email-4">o</div>
-      <div data-testid="admin_manage__element-user-table-role-4">o</div>
-      <div data-testid="admin_manage__element-user-table-remove-4">o</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Tipo</th>
+            <th>Excluir</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.length
+          && users.map(({ id, name, email, role }, i) => {
+            let type = 'P. Administradora';
+            if (role === 'seller') type = 'P. Vendedora';
+            if (role === 'customer') type = 'Cliente';
+
+            return (
+              <tr key={ `admin-users-table-${i}` }>
+                <td
+                  data-testid={ `admin_manage__element-user-table-item-number-${i}` }
+                >
+                  {i + 1}
+                </td>
+                <td
+                  data-testid={ `admin_manage__element-user-table-name-${i}` }
+                >
+                  {name}
+                </td>
+                <td
+                  data-testid={ `admin_manage__element-user-table-email-${i}` }
+                >
+                  {email}
+                </td>
+                <td
+                  data-testid={ `admin_manage__element-user-table-role-${i}` }
+                >
+                  {type}
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    onClick={ () => handleRemoveUser(id) }
+                    data-testid={ `admin_manage__element-user-table-remove-${i}` }
+                  >
+                    x
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }
