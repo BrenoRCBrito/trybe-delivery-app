@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function AdminUsersTable(props) {
-  const { users, handleRemoveUser } = props;
+  const { users, handleRemoveUser, failedToDelete } = props;
 
   return (
     <div>
@@ -59,6 +59,7 @@ function AdminUsersTable(props) {
           })}
         </tbody>
       </table>
+      { failedToDelete && <span>{ failedToDelete }</span> }
     </div>
   );
 }
@@ -72,6 +73,7 @@ AdminUsersTable.propTypes = {
       role: PropTypes.string.isRequired,
     }),
   ).isRequired,
+  failedToDelete: PropTypes.string.isRequired,
   handleRemoveUser: PropTypes.func.isRequired,
 };
 

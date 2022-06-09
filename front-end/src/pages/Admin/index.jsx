@@ -8,6 +8,8 @@ import { getSellers, deleteUser } from '../../services';
 
 function Admin() {
   const [users, setUsers] = useState([]);
+  const [failedToDelete, setFailedToDelete] = useState('');
+
   const {
     token,
     initializeUser,
@@ -16,12 +18,16 @@ function Admin() {
   const handleRemoveUser = (id) => {
     deleteUser(token, id)
       .then((status) => {
-        if (status === StatusCodes.NO_CONTENT) {
+        if (status === StatusCodes.NO_CONTENT || status === StatusCodes.NOT_FOUND) {
           setUsers(users.filter((user) => user.id !== id));
+          setFailedToDelete('');
+        } else {
+          setFailedToDelete('Falha ao apagar o usuário');
+          console.log('Expected status code to be 204 or 404 but got', status);
         }
       })
       .catch((status) => {
-        console.log(status);
+        console.log('Internal error: the server may be down - status: ', status);
       });
   };
 
@@ -40,7 +46,11 @@ function Admin() {
     <div>
       <Navbar />
       <AdminForm />
-      <AdminUsersTable users={ users } handleRemoveUser={ handleRemoveUser } />
+      <AdminUsersTable
+        users={ users }
+        handleRemoveUser={ handleRemoveUser }
+        failedToDelete={ failedToDelete }
+      />
     </div>
   );
 }
