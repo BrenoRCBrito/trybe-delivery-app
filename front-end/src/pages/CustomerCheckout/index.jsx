@@ -7,14 +7,14 @@ import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
 import {
   setCheckoutLS,
   clearCheckoutLS,
-  INITIAL_CART,
-} from '../../services/localstorage';
+  INITIAL_CHECKOUT,
+} from '../../services/localStorage';
 
 import Navbar from '../../components/Navbar/Navbar';
 
 function CustomerCheckout() {
   const {
-    userData,
+    token,
     checkout,
     setCheckout,
     initializeUser,
@@ -35,19 +35,15 @@ function CustomerCheckout() {
   const goTo = useHistory();
 
   useEffect(() => {
-    const customerCheckoutEffect = () => {
-      initializeUser();
-      if (userData.token) {
-        getSellers(userData.token)
-          .then((response) => {
-            setSellers(response.users);
-          })
-          .catch((e) => console.log(e));
-      }
-    };
-
-    customerCheckoutEffect();
-  }, [initializeUser, userData]);
+    initializeUser();
+    if (token) {
+      getSellers(token)
+        .then((response) => {
+          setSellers(response.users);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [initializeUser, token]);
 
   const handleChange = ({ target: { name, value } }) => {
     const updatedCheckout = { ...checkout, cart: { ...checkout.cart, [name]: value } };
@@ -61,10 +57,10 @@ function CustomerCheckout() {
   };
 
   const handleSubmit = () => {
-    postSale(userData.token, checkout)
+    postSale(token, checkout)
       .then((response) => {
         if (response.sale.id) {
-          setCheckout(INITIAL_CART);
+          setCheckout(INITIAL_CHECKOUT);
           clearCheckoutLS();
           goTo.push(`/customer/orders/${response.sale.id}`);
         }

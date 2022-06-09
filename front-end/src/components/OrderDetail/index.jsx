@@ -6,7 +6,7 @@ import Context from '../../context/Context';
 import { getSale, updateSale } from '../../services';
 
 function OrderDetail(props) {
-  const { userData, initializeUser } = useContext(Context);
+  const { token, initializeUser } = useContext(Context);
   const { id } = useParams();
   const [sale, setSale] = useState({});
   const { data } = props;
@@ -14,16 +14,15 @@ function OrderDetail(props) {
 
   useEffect(() => {
     initializeUser();
-    if (userData.token) {
-      getSale(userData.token, id)
+    if (token) {
+      getSale(token, id)
         .then((order) => setSale(order[0]))
         .catch((e) => console.log(e));
     }
-    // eslint-disable-next-line
-  }, [id, userData.token, updateStatus]);
+  }, [id, initializeUser, token, updateStatus]);
 
   const handleSubmit = (status) => {
-    updateSale(userData.token, id, status)
+    updateSale(token, id, status)
       .then(() => setUpdateStatus(!updateStatus))
       .catch((e) => console.log(e));
   };

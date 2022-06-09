@@ -1,29 +1,50 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Context from './Context';
 import {
   setUserLS,
   getUserLS,
   setCheckoutLS,
   getCheckoutLS,
-} from '../services/localstorage';
+  clearLocalStorage,
+  INITIAL_CHECKOUT,
+} from '../services/localStorage';
+
+const INITIAL_USER = {
+  id: null,
+  name: null,
+  role: null,
+  token: null,
+};
 
 function Provider({ children }) {
-  const [userData, setUserData] = useState({});
+  const [user, setUser] = useState(INITIAL_USER);
   const [checkout, setCheckout] = useState(getCheckoutLS());
   const [products, setProducts] = useState([]);
+
   const [orders, setOrders] = useState([]);
 
+  const token = useMemo(() => user.token, [user]);
+
+  const role = useMemo(() => user.role, [user]);
+
+  const makeLogout = () => {
+    clearLocalStorage();
+    setUser(INITIAL_USER);
+    setCheckout(INITIAL_CHECKOUT);
+    setProducts([]);
+    setOrders([]);
+  };
+
   const initializeUser = useCallback(() => {
-    console.log('initializeUser');
-    const user = getUserLS();
-    if (!user && userData.id) {
-      setUserLS(userData);
-    } else if (user && !userData.id) {
+    const userLS = getUserLS();
+    if (!userLS && user.id) {
+      setUserLS(user);
+    } else if (userLS && !user.id) {
       // renovar o token com backend
-      setUserData(user);
+      setUser(userLS);
     }
-  }, [userData]);
+  }, [user]);
 
   const calculateTotalPrice = (array) => {
     const sum = array.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
@@ -65,17 +86,20 @@ function Provider({ children }) {
   };
 
   const context = {
-    userData,
-    setUserData,
+    user,
+    setUser,
+    initializeUser,
     checkout,
     setCheckout,
-    products,
-    orders,
-    synchronizeProducts,
-    setOrders,
-    setQuantity,
     initializeCheckout,
-    initializeUser,
+    products,
+    setQuantity,
+    synchronizeProducts,
+    orders,
+    setOrders,
+    token,
+    role,
+    makeLogout,
   };
 
   return (

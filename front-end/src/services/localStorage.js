@@ -1,4 +1,4 @@
-const INITIAL_CART = {
+const INITIAL_CHECKOUT = {
   cart: {
     totalPrice: 0,
     deliveryAddress: '',
@@ -18,10 +18,11 @@ const setCheckoutLS = (cart) => localStorage.setItem('cart', JSON.stringify(cart
 
 const getCheckoutLS = () => {
   const cart = JSON.parse(localStorage.getItem('cart'));
-  return cart || INITIAL_CART;
+  return cart || INITIAL_CHECKOUT;
 };
 
-const clearCheckoutLS = () => localStorage.setItem('cart', JSON.stringify(INITIAL_CART));
+const clearCheckoutLS = () => localStorage
+  .setItem('cart', JSON.stringify(INITIAL_CHECKOUT));
 
 export {
   getUserLS,
@@ -30,5 +31,5 @@ export {
   setCheckoutLS,
   getCheckoutLS,
   clearCheckoutLS,
-  INITIAL_CART,
+  INITIAL_CHECKOUT,
 };

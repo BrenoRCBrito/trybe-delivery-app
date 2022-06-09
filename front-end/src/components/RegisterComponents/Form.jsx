@@ -6,7 +6,7 @@ import Context from '../../context/Context';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
 import { postRegister } from '../../services';
-import { setUserLS } from '../../services/localstorage';
+import { setUserLS } from '../../services/localStorage';
 import { validateRegister } from '../utils/utils';
 
 function RegisterForm() {
@@ -14,7 +14,7 @@ function RegisterForm() {
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [response, setResponse] = useState();
-  const { setUserData } = useContext(Context);
+  const { setUser } = useContext(Context);
 
   const goTo = useHistory();
 
@@ -38,10 +38,10 @@ function RegisterForm() {
   useEffect(() => {
     if (typeof response === 'object') {
       setUserLS(response);
-      setUserData(response);
+      setUser(response);
       return goTo.push('/customer/products');
     }
-  }, [response, goTo, setUserData]);
+  }, [response, goTo, setUser]);
 
   return (
     <div>

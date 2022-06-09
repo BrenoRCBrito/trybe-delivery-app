@@ -1,8 +1,15 @@
 import axios from 'axios';
 
+const DEFAULT_PORT = 3001;
+
+const REACT_APP_HOSTNAME = process.env.REACT_APP_HOSTNAME || 'http://localhost';
+const REACT_APP_BACKEND_PORT = process.env.REACT_APP_BACKEND_PORT || DEFAULT_PORT;
+
+const URI = `${REACT_APP_HOSTNAME}:${REACT_APP_BACKEND_PORT}`;
+
 function postLogin(email, password) {
   return axios
-    .post('http://localhost:3001/login', {
+    .post(`${URI}/login`, {
       email,
       password,
     })
@@ -12,7 +19,7 @@ function postLogin(email, password) {
 
 function postRegister(email, name, password) {
   return axios
-    .post('http://localhost:3001/register', {
+    .post(`${URI}/register`, {
       email,
       name,
       password,
@@ -23,21 +30,21 @@ function postRegister(email, name, password) {
 
 function getProducts(token) {
   return axios
-    .get('http://localhost:3001/product', { headers: { Authorization: token } })
+    .get(`${URI}/product`, { headers: { Authorization: token } })
     .then((res) => res.data)
     .catch((err) => err.response.status);
 }
 
 function getSales(token) {
   return axios
-    .get('http://localhost:3001/sale', { headers: { Authorization: token } })
+    .get(`${URI}/sale`, { headers: { Authorization: token } })
     .then((res) => res.data)
     .catch((err) => err.response.status);
 }
 
 function getSale(token, id) {
   return axios
-    .get(`http://localhost:3001/sale/${id}`, {
+    .get(`${URI}/sale/${id}`, {
       headers: { Authorization: token },
     })
     .then((res) => res.data.sale)
@@ -53,7 +60,7 @@ function postAdminRegister({
 }) {
   return axios
     .post(
-      'http://localhost:3001/register/admin',
+      `${URI}/register/admin`,
       {
         email: userEmail,
         name: userName,
@@ -68,14 +75,14 @@ function postAdminRegister({
 
 function getSellers(token) {
   return axios
-    .get('http://localhost:3001/user', { headers: { Authorization: token } })
+    .get(`${URI}/user`, { headers: { Authorization: token } })
     .then((res) => res.data)
     .catch((err) => err.response.status);
 }
 
 function postSale(token, cart) {
   return axios
-    .post('http://localhost:3001/sale', cart, {
+    .post(`${URI}/sale`, cart, {
       headers: { Authorization: token },
     })
     .then((res) => res.data)
@@ -85,7 +92,7 @@ function postSale(token, cart) {
 function updateSale(token, saleId, status) {
   return axios
     .patch(
-      `http://localhost:3001/sale/${saleId}`,
+      `${URI}/sale/${saleId}`,
       {
         status,
       },
