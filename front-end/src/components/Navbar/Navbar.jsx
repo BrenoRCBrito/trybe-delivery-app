@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
-import { clearLocalStorage } from '../../services/localstorage';
 
 function Navbar() {
-  const { userData, setUserData } = useContext(Context);
+  const { user, makeLogout } = useContext(Context);
   const goTo = useHistory();
   const isCustomerPage = window.location.href.includes('customer');
   const isSellerPage = window.location.href.includes('seller');
@@ -36,14 +35,13 @@ function Navbar() {
           </Link>
         )}
         <h3 data-testid="customer_products__element-navbar-user-full-name">
-          {userData.name}
+          {user.name}
         </h3>
         <button
           type="button"
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
-            clearLocalStorage();
-            setUserData({});
+            makeLogout();
             goTo.push('/login');
           } }
         >

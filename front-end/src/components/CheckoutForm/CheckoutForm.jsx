@@ -1,22 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../../context/Context';
-import { setCartLS } from '../../services/localstorage';
 
 function CheckoutForm(props) {
   const { sellers, handleChange, handleSubmit } = props;
-  const [disabled, setDisabled] = useState(true);
   const { checkout } = useContext(Context);
   const { cart: { sellerId, deliveryAddress, deliveryNumber } } = checkout;
-
-  useEffect(() => {
-    if (sellerId && deliveryAddress && deliveryNumber) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
-    setCartLS(checkout);
-  }, [checkout, deliveryAddress, deliveryNumber, sellerId]);
 
   return (
     <div>
@@ -72,7 +61,7 @@ function CheckoutForm(props) {
           data-testid="customer_checkout__button-submit-order"
           type="button"
           onClick={ handleSubmit }
-          disabled={ disabled }
+          disabled={ !(sellerId && deliveryAddress && deliveryNumber) }
         >
           Finalizar pedido
         </button>

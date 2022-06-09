@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 
 import { postLogin } from '../../services';
-import { setUserLS } from '../../services/localstorage';
+import { setUserLS } from '../../services/localStorage';
 import { validateLogin } from '../utils/utils';
 import inputsDatas from '../utils/inputsDatas';
 import GenericInput from '../GenericInput';
@@ -14,7 +14,7 @@ function LoginForm() {
   const [userPassword, setUserPassword] = useState('');
   const [response, setResponse] = useState();
   const [loginStatus, setLoginStatus] = useState(false);
-  const { userData, setUserData, initializeUser } = useContext(Context);
+  const { token, role, setUser, initializeUser } = useContext(Context);
 
   const goTo = useHistory();
 
@@ -37,12 +37,12 @@ function LoginForm() {
 
   useEffect(() => {
     initializeUser();
-    if (!userData.token && loginStatus) {
+    if (!token && loginStatus) {
+      setUser(response);
       setUserLS(response);
-      setUserData(response);
     }
-    if (userData.role) {
-      switch (userData.role) {
+    if (role) {
+      switch (role) {
       case 'seller':
         goTo.push('/seller/orders');
         break;
@@ -53,7 +53,7 @@ function LoginForm() {
         goTo.push('/customer/products');
       }
     }
-  }, [goTo, userData, loginStatus, response, setUserData, initializeUser]);
+  }, [goTo, loginStatus, response, setUser, initializeUser, token, role]);
 
   return (
     <div>

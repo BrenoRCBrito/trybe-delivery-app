@@ -11,7 +11,7 @@ function AdminForm() {
   const [userPassword, setUserPassword] = useState('');
   const [userRole, setUserRole] = useState('seller');
   const [registerButton, setRegisterButton] = useState(false);
-  const { token } = useContext(Context).userData;
+  const { token } = useContext(Context);
 
   const generalHandler = ({ target }) => {
     if (target.id === 'name-id') setUserName(target.value);

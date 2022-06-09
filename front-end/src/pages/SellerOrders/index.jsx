@@ -6,17 +6,16 @@ import Orders from '../../components/OrdersList';
 import data from '../../components/utils/orderData';
 
 function SellerOrders() {
-  const { userData, setOrders, initializeUser } = useContext(Context);
+  const { token, setOrders, initializeUser } = useContext(Context);
 
   useEffect(() => {
     initializeUser();
-    if (userData.token) {
-      getSales(userData.token)
+    if (token) {
+      getSales(token)
         .then(({ sales }) => sales && setOrders(sales))
         .catch((e) => console.log(e));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData]);
+  }, [initializeUser, setOrders, token]);
 
   return (
     <div>

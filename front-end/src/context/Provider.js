@@ -1,32 +1,69 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Context from './Context';
-import { getCartLS, getUserLS, setCartLS, setUserLS } from '../services/localstorage';
+import {
+  setUserLS,
+  getUserLS,
+  setCheckoutLS,
+  getCheckoutLS,
+  clearLocalStorage,
+  INITIAL_CHECKOUT,
+} from '../services/localStorage';
+
+const INITIAL_USER = {
+  id: null,
+  name: null,
+  role: null,
+  token: null,
+};
 
 function Provider({ children }) {
-  const [userData, setUserData] = useState({});
-  const [checkout, setCheckout] = useState(getCartLS());
+  const [user, setUser] = useState(INITIAL_USER);
+  const [checkout, setCheckout] = useState(getCheckoutLS());
   const [products, setProducts] = useState([]);
+
   const [orders, setOrders] = useState([]);
 
-  const initializeUser = () => {
-    const user = getUserLS();
-    if (!user && userData.id) {
-      setUserLS(userData);
-    } else if (user && !userData.id) {
-      // renovar o token com backend
-      setUserData(user);
-    }
+  const token = useMemo(() => user.token, [user]);
+
+  const role = useMemo(() => user.role, [user]);
+
+  const makeLogout = () => {
+    clearLocalStorage();
+    setUser(INITIAL_USER);
+    setCheckout(INITIAL_CHECKOUT);
+    setProducts([]);
+    setOrders([]);
   };
+
+  const initializeUser = useCallback(() => {
+    const userLS = getUserLS();
+    if (!userLS && user.id) {
+      setUserLS(user);
+    } else if (userLS && !user.id) {
+      // renovar o token com backend
+      setUser(userLS);
+    }
+  }, [user]);
 
   const calculateTotalPrice = (array) => {
     const sum = array.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
-    const response = Math.round(sum * 100) / 100;
-    return response;
+    return Math.round(sum * 100) / 100;
   };
 
-  const initializeCart = (array) => {
-    const productsToSave = array.map((product) => {
+  const synchronizeProducts = (productsToSync) => {
+    const totalPrice = calculateTotalPrice(productsToSync);
+    const onlyAddedProducts = productsToSync.filter(({ quantity }) => quantity > 0);
+    const updateCheckout = {
+      cart: { ...checkout.cart, totalPrice },
+      products: onlyAddedProducts,
+    };
+    setCheckout(updateCheckout);
+    setCheckoutLS(updateCheckout);
+  };
+
+  const initializeCheckout = (productsFromFetch) => {
+    const productsToSave = productsFromFetch.map((product) => {
       const { price, id, ...rest } = product;
       let quantity = 0;
       const foundProduct = checkout
@@ -36,40 +73,33 @@ function Provider({ children }) {
       }
       return { ...rest, id, price: Number(price), quantity: Number(quantity) };
     });
-    const totalPrice = calculateTotalPrice(productsToSave);
-    const onlyAddedProducts = productsToSave.filter(({ quantity }) => quantity > 0);
     setProducts(productsToSave);
-    setCartLS({
-      cart: { ...checkout.cart, totalPrice },
-      products: onlyAddedProducts });
-    setCheckout({
-      cart: { ...checkout.cart, totalPrice },
-      products: onlyAddedProducts });
+    synchronizeProducts(productsToSave);
   };
 
   const setQuantity = (id, qtd) => {
     const index = products.findIndex(({ id: productId }) => id === productId);
     const productsToUpdate = [...products];
     productsToUpdate[index].quantity = Number(qtd);
-    const totalPrice = calculateTotalPrice(productsToUpdate);
-    const onlyAddedProducts = products.filter(({ quantity }) => quantity > 0);
     setProducts(productsToUpdate);
-    setCheckout({ cart: { ...checkout.cart, totalPrice }, products: onlyAddedProducts });
-    setCartLS({ cart: { ...checkout.cart, totalPrice }, products: onlyAddedProducts });
+    synchronizeProducts(productsToUpdate);
   };
 
   const context = {
-    userData,
-    setUserData,
+    user,
+    setUser,
+    initializeUser,
     checkout,
     setCheckout,
+    initializeCheckout,
     products,
-    orders,
-    calculateTotalPrice,
-    setOrders,
     setQuantity,
-    initializeCart,
-    initializeUser,
+    synchronizeProducts,
+    orders,
+    setOrders,
+    token,
+    role,
+    makeLogout,
   };
 
   return (
