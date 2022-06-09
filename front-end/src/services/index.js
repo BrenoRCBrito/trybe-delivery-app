@@ -98,7 +98,7 @@ function updateSale(token, saleId, status) {
       },
       { headers: { Authorization: token } },
     )
-    .then((res) => res.status)
+    .then((res) => res.data)
     .catch((err) => err.response.status);
 }
 
@@ -107,7 +107,7 @@ function deleteUser(token, id) {
     .delete(`${URI}/user/delete/${id}`, {
       headers: { Authorization: token },
     })
-    .then((res) => res.data)
+    .then((res) => res.status)
     .catch((err) => err.response.status);
 }
 
