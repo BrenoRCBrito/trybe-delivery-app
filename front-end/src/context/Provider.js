@@ -1,15 +1,21 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Context from './Context';
-import { getCartLS, getUserLS, setCartLS, setUserLS } from '../services/localstorage';
+import {
+  setUserLS,
+  getUserLS,
+  setCheckoutLS,
+  getCheckoutLS,
+} from '../services/localstorage';
 
 function Provider({ children }) {
   const [userData, setUserData] = useState({});
-  const [checkout, setCheckout] = useState(getCartLS());
+  const [checkout, setCheckout] = useState(getCheckoutLS());
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
 
-  const initializeUser = () => {
+  const initializeUser = useCallback(() => {
+    console.log('initializeUser');
     const user = getUserLS();
     if (!user && userData.id) {
       setUserLS(userData);
@@ -17,7 +23,7 @@ function Provider({ children }) {
       // renovar o token com backend
       setUserData(user);
     }
-  };
+  }, [userData]);
 
   const calculateTotalPrice = (array) => {
     const sum = array.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
@@ -31,12 +37,11 @@ function Provider({ children }) {
       cart: { ...checkout.cart, totalPrice },
       products: onlyAddedProducts,
     };
-    setProducts(productsToSync);
     setCheckout(updateCheckout);
-    setCartLS(updateCheckout);
+    setCheckoutLS(updateCheckout);
   };
 
-  const initializeCart = (productsFromFetch) => {
+  const initializeCheckout = (productsFromFetch) => {
     const productsToSave = productsFromFetch.map((product) => {
       const { price, id, ...rest } = product;
       let quantity = 0;
@@ -47,6 +52,7 @@ function Provider({ children }) {
       }
       return { ...rest, id, price: Number(price), quantity: Number(quantity) };
     });
+    setProducts(productsToSave);
     synchronizeProducts(productsToSave);
   };
 
@@ -54,6 +60,7 @@ function Provider({ children }) {
     const index = products.findIndex(({ id: productId }) => id === productId);
     const productsToUpdate = [...products];
     productsToUpdate[index].quantity = Number(qtd);
+    setProducts(productsToUpdate);
     synchronizeProducts(productsToUpdate);
   };
 
@@ -64,10 +71,10 @@ function Provider({ children }) {
     setCheckout,
     products,
     orders,
-    calculateTotalPrice,
+    synchronizeProducts,
     setOrders,
     setQuantity,
-    initializeCart,
+    initializeCheckout,
     initializeUser,
   };
 

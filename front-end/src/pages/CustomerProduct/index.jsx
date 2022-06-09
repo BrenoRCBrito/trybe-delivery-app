@@ -6,7 +6,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import ProductsList from '../../components/ProductsList/ProductsList';
 
 function CustomerProducts() {
-  const { userData, checkout, initializeCart, initializeUser } = useContext(Context);
+  const { userData, checkout, initializeCheckout, initializeUser } = useContext(Context);
 
   const goTo = useHistory();
 
@@ -19,7 +19,7 @@ function CustomerProducts() {
     if (userData.token) {
       getProducts(userData.token)
         .then((response) => {
-          initializeCart(response.products);
+          initializeCheckout(response.products);
         })
         .catch((e) => console.log(e));
     }

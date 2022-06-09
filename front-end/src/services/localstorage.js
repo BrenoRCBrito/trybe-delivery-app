@@ -14,20 +14,21 @@ const setUserLS = (userDate) => localStorage.setItem('user', JSON.stringify(user
 
 const clearLocalStorage = () => localStorage.clear();
 
-const setCartLS = (cart) => localStorage.setItem('cart', JSON.stringify(cart));
+const setCheckoutLS = (cart) => localStorage.setItem('cart', JSON.stringify(cart));
 
-const getCartLS = () => {
+const getCheckoutLS = () => {
   const cart = JSON.parse(localStorage.getItem('cart'));
   return cart || INITIAL_CART;
 };
 
-const clearCartLS = () => localStorage.setItem('cart', JSON.stringify(INITIAL_CART));
+const clearCheckoutLS = () => localStorage.setItem('cart', JSON.stringify(INITIAL_CART));
 
 export {
   getUserLS,
   setUserLS,
   clearLocalStorage,
-  setCartLS,
-  getCartLS,
-  clearCartLS,
+  setCheckoutLS,
+  getCheckoutLS,
+  clearCheckoutLS,
+  INITIAL_CART,
 };
