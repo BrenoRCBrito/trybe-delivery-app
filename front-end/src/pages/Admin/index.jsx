@@ -12,6 +12,10 @@ function Admin() {
     initializeUser,
   } = useContext(Context);
 
+  const handleRemoveUser = (id) => {
+    console.log(id);
+  };
+
   console.log(users);
   useEffect(() => {
     initializeUser();
@@ -28,7 +32,7 @@ function Admin() {
     <div>
       <Navbar />
       <AdminForm />
-      <AdminUsersTable />
+      <AdminUsersTable users={ users } handleRemoveUser={ handleRemoveUser } />
     </div>
   );
 }
