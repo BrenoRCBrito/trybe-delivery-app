@@ -21,12 +21,23 @@ function Provider({ children }) {
 
   const calculateTotalPrice = (array) => {
     const sum = array.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
-    const response = Math.round(sum * 100) / 100;
-    return response;
+    return Math.round(sum * 100) / 100;
   };
 
-  const initializeCart = (array) => {
-    const productsToSave = array.map((product) => {
+  const synchronizeProducts = (productsToSync) => {
+    const totalPrice = calculateTotalPrice(productsToSync);
+    const onlyAddedProducts = productsToSync.filter(({ quantity }) => quantity > 0);
+    const updateCheckout = {
+      cart: { ...checkout.cart, totalPrice },
+      products: onlyAddedProducts,
+    };
+    setProducts(productsToSync);
+    setCheckout(updateCheckout);
+    setCartLS(updateCheckout);
+  };
+
+  const initializeCart = (productsFromFetch) => {
+    const productsToSave = productsFromFetch.map((product) => {
       const { price, id, ...rest } = product;
       let quantity = 0;
       const foundProduct = checkout
@@ -36,26 +47,14 @@ function Provider({ children }) {
       }
       return { ...rest, id, price: Number(price), quantity: Number(quantity) };
     });
-    const totalPrice = calculateTotalPrice(productsToSave);
-    const onlyAddedProducts = productsToSave.filter(({ quantity }) => quantity > 0);
-    setProducts(productsToSave);
-    setCartLS({
-      cart: { ...checkout.cart, totalPrice },
-      products: onlyAddedProducts });
-    setCheckout({
-      cart: { ...checkout.cart, totalPrice },
-      products: onlyAddedProducts });
+    synchronizeProducts(productsToSave);
   };
 
   const setQuantity = (id, qtd) => {
     const index = products.findIndex(({ id: productId }) => id === productId);
     const productsToUpdate = [...products];
     productsToUpdate[index].quantity = Number(qtd);
-    const totalPrice = calculateTotalPrice(productsToUpdate);
-    const onlyAddedProducts = products.filter(({ quantity }) => quantity > 0);
-    setProducts(productsToUpdate);
-    setCheckout({ cart: { ...checkout.cart, totalPrice }, products: onlyAddedProducts });
-    setCartLS({ cart: { ...checkout.cart, totalPrice }, products: onlyAddedProducts });
+    synchronizeProducts(productsToUpdate);
   };
 
   const context = {
