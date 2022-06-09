@@ -1,9 +1,13 @@
 import React from 'react';
 import AdminForm from '../../components/AdminComponents/Form';
+import Navbar from '../../components/Navbar/Navbar';
 
 function Login() {
   return (
-    <AdminForm />
+    <div>
+      <Navbar />
+      <AdminForm />
+    </div>
   );
 }
 
