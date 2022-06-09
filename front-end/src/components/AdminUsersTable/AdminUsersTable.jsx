@@ -6,6 +6,7 @@ function AdminUsersTable(props) {
 
   return (
     <div>
+      <h2>Lista de usuários</h2>
       <table>
         <thead>
           <tr>
