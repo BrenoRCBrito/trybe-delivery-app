@@ -102,6 +102,15 @@ function updateSale(token, saleId, status) {
     .catch((err) => err.response.status);
 }
 
+function deleteUser(token, id) {
+  return axios
+    .delete(`${URI}/user/${id}`, {
+      headers: { Authorization: token },
+    })
+    .then((res) => res.data)
+    .catch((err) => err.response.status);
+}
+
 export {
   postAdminRegister,
   postLogin,
@@ -112,4 +121,5 @@ export {
   getSellers,
   postSale,
   updateSale,
+  deleteUser,
 };
