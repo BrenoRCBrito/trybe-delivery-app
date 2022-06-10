@@ -30,7 +30,7 @@ function Pages() {
         render={ () => <OrderDetails data={ data.Seller } /> }
       />
       <Route exact path="/customer/checkout" component={ CustomerCheckout } />
-      <Route render={ () => <Redirect to={ { pathname: '/login' } } /> } />
+      <Route><Redirect to="/login" /></Route>
     </Switch>
   );
 }
