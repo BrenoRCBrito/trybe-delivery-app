@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function AdminUsersTable(props) {
-  const { users, handleRemoveUser, failedToDelete } = props;
+  const { users, handleRemoveUser, currentId } = props;
 
   return (
     <div>
@@ -48,6 +48,7 @@ function AdminUsersTable(props) {
                 <td>
                   <button
                     type="button"
+                    disabled={ currentId === id }
                     onClick={ () => handleRemoveUser(id) }
                     data-testid={ `admin_manage__element-user-table-remove-${i}` }
                   >
@@ -59,7 +60,6 @@ function AdminUsersTable(props) {
           })}
         </tbody>
       </table>
-      { failedToDelete && <span>{ failedToDelete }</span> }
     </div>
   );
 }
@@ -73,7 +73,7 @@ AdminUsersTable.propTypes = {
       role: PropTypes.string.isRequired,
     }),
   ).isRequired,
-  failedToDelete: PropTypes.string.isRequired,
+  currentId: PropTypes.number.isRequired,
   handleRemoveUser: PropTypes.func.isRequired,
 };
 

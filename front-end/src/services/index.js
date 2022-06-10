@@ -68,9 +68,10 @@ function postAdminRegister({
         role: userRole,
       },
       { headers: { Authorization: token } },
-    )
-    .then((res) => res.data)
-    .catch((err) => err.response.status);
+    );
+  // )
+  // .then((res) => res.data)
+  // .catch((err) => err.response.status);
 }
 
 function getSellers(token) {
