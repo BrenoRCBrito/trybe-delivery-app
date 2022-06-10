@@ -11,7 +11,7 @@ const destroy = async (req, res) => {
   const { id } = req.params;
   const { role } = req.user;
   await userServices.destroy(id, role);
-  return res.status(204).send();
+  return res.status(204).end();
 };
 
 const renew = async (req, res) => {
@@ -23,6 +23,6 @@ const renew = async (req, res) => {
   delete userWithoutPassword.password;
   const token = create(userWithoutPassword);
   return res.status(200).json({ token, ...userWithoutPassword });
-};  
+};
 
 module.exports = { getAll, destroy, renew };

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
-import { getSellers, postSale } from '../../services';
+import { getUsers, postSale } from '../../services';
 import CheckoutTable from '../../components/CheckoutTable/CheckoutTable';
 import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
 import {
@@ -37,7 +37,7 @@ function CustomerCheckout() {
   useEffect(() => {
     initializeUser();
     if (token) {
-      getSellers(token)
+      getUsers(token)
         .then((response) => {
           setSellers(response.users);
         })
