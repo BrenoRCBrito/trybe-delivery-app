@@ -21,7 +21,7 @@ const create = (payload) => {
 
 const decode = (token) => {
   const secretPhrase = getSecretPhrase();
-  return jwt.decode(token, secretPhrase);
+  return jwt.verify(token, secretPhrase);
 };
 
 module.exports = { decode, create };

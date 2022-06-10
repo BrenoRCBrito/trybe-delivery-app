@@ -69,9 +69,6 @@ function postAdminRegister({
       },
       { headers: { Authorization: token } },
     );
-  // )
-  // .then((res) => res.data)
-  // .catch((err) => err.response.status);
 }
 
 function getUsers(token) {
@@ -112,6 +109,11 @@ function deleteUser(token, id) {
     .catch((err) => err.response.status);
 }
 
+function renewToken(token) {
+  return axios
+    .get(`${URI}/user/renew`, { headers: { Authorization: token } });
+}
+
 export {
   postAdminRegister,
   postLogin,
@@ -123,4 +125,5 @@ export {
   postSale,
   updateSale,
   deleteUser,
+  renewToken,
 };
