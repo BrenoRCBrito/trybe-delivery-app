@@ -4,7 +4,7 @@ import AdminForm from '../../components/AdminComponents/Form';
 import Navbar from '../../components/Navbar/Navbar';
 import AdminUsersTable from '../../components/AdminUsersTable/AdminUsersTable';
 import Context from '../../context/Context';
-import { getSellers, postAdminRegister, deleteUser } from '../../services';
+import { getUsers, postAdminRegister, deleteUser } from '../../services';
 
 function Admin() {
   const [users, setUsers] = useState([]);
@@ -69,7 +69,7 @@ function Admin() {
   useEffect(() => {
     initializeUser();
     if (token) {
-      getSellers(token)
+      getUsers(token)
         .then((response) => {
           setUsers(response.users);
         })

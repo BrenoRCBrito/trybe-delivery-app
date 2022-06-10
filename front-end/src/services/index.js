@@ -74,7 +74,7 @@ function postAdminRegister({
   // .catch((err) => err.response.status);
 }
 
-function getSellers(token) {
+function getUsers(token) {
   return axios
     .get(`${URI}/user`, { headers: { Authorization: token } })
     .then((res) => res.data)
@@ -119,7 +119,7 @@ export {
   getProducts,
   getSales,
   getSale,
-  getSellers,
+  getUsers,
   postSale,
   updateSale,
   deleteUser,
