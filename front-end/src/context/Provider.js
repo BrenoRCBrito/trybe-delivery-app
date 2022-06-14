@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import {
@@ -30,6 +30,10 @@ function Provider({ children }) {
 
   const role = useMemo(() => user.role, [user]);
 
+  const count = useRef(0);
+
+  const initializedUser = useRef(false);
+
   const goTo = useHistory();
 
   const makeLogout = useCallback(() => {
@@ -42,6 +46,8 @@ function Provider({ children }) {
   }, [goTo]);
 
   const initializeUser = useCallback(() => {
+    count.current += 1;
+    console.log('initializeUser', count);
     const userLS = getUserLS();
     if (!userLS && user.id) {
       setUserLS(user);
@@ -55,6 +61,7 @@ function Provider({ children }) {
           makeLogout();
         });
     }
+    initializedUser.current = true;
   }, [makeLogout, user]);
 
   const calculateTotalPrice = (array) => {
@@ -62,7 +69,7 @@ function Provider({ children }) {
     return Math.round(sum * 100) / 100;
   };
 
-  const synchronizeProducts = (productsToSync) => {
+  const synchronizeProducts = useCallback((productsToSync) => {
     const totalPrice = calculateTotalPrice(productsToSync);
     const onlyAddedProducts = productsToSync.filter(({ quantity }) => quantity > 0);
     const updateCheckout = {
@@ -71,9 +78,9 @@ function Provider({ children }) {
     };
     setCheckout(updateCheckout);
     setCheckoutLS(updateCheckout);
-  };
+  }, [checkout.cart]);
 
-  const initializeCheckout = (productsFromFetch) => {
+  const initializeCheckout = useCallback((productsFromFetch) => {
     const productsToSave = productsFromFetch.map((product) => {
       const { price, id, ...rest } = product;
       let quantity = 0;
@@ -86,7 +93,7 @@ function Provider({ children }) {
     });
     setProducts(productsToSave);
     synchronizeProducts(productsToSave);
-  };
+  }, [checkout.products, synchronizeProducts]);
 
   const setQuantity = (id, qtd) => {
     const index = products.findIndex(({ id: productId }) => id === productId);
@@ -100,6 +107,7 @@ function Provider({ children }) {
     user,
     setUser,
     initializeUser,
+    initializedUser,
     checkout,
     setCheckout,
     initializeCheckout,

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
 import { getProducts } from '../../services';
@@ -7,27 +7,36 @@ import ProductsList from '../../components/ProductsList/ProductsList';
 
 function CustomerProducts() {
   const {
-    products,
+    // products,
     token,
     checkout,
     initializeCheckout,
     initializeUser,
+    initializedUser,
   } = useContext(Context);
 
   const goTo = useHistory();
 
-  const initialized = useMemo(() => products.length !== 0, [products]);
+  // const initialized = useMemo(() => products.length !== 0, [products]);
+
+  const initializedCheckout = useRef(false);
+  const count = useRef(0);
 
   useEffect(() => {
-    initializeUser();
-    if (token && !initialized) {
-      getProducts(token)
-        .then((response) => {
-          initializeCheckout(response.products);
-        })
-        .catch((e) => console.log(e));
+    if (!initializedUser.current) initializeUser();
+    if (!initializedCheckout.current && token) {
+      count.current += 1;
+      console.log('useEffect CustomerProduct', count);
+      if (!initializedCheckout.current) {
+        getProducts(token)
+          .then((response) => {
+            initializeCheckout(response.products);
+            initializedCheckout.current = true;
+          })
+          .catch((e) => console.log(e));
+      }
     }
-  }, [initializeCheckout, initializeUser, initialized, token]);
+  }, [initializeCheckout, initializeUser, initializedUser, token]);
 
   const { cart: { totalPrice } } = checkout;
 
