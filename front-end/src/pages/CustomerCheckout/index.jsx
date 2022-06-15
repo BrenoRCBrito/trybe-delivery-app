@@ -73,10 +73,11 @@ function CustomerCheckout() {
       <Navbar />
       <h2>Finalizar Pedido</h2>
       <div>
-        <CheckoutTable
+        { products.length
+        && <CheckoutTable
           products={ products }
           handleRemoveItem={ handleRemoveItem }
-        />
+        />}
         <h3>
           Total: R$
           {' '}
