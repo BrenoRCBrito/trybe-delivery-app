@@ -12,11 +12,20 @@ function Admin() {
 
   const {
     token,
-    user: currentUser,
+    user: { id: currentId },
     initializeUser,
   } = useContext(Context);
 
-  const { id: currentId } = currentUser;
+  useEffect(() => {
+    initializeUser();
+    if (token) {
+      getUsers(token)
+        .then((response) => {
+          setUsers(response.users);
+        })
+        .catch((e) => console.log(e));
+    }
+  }, [initializeUser, setUsers, token]);
 
   const handleRegister = (newUser) => {
     postAdminRegister({ ...newUser, token })
@@ -66,26 +75,15 @@ function Admin() {
       });
   };
 
-  useEffect(() => {
-    initializeUser();
-    if (token) {
-      getUsers(token)
-        .then((response) => {
-          setUsers(response.users);
-        })
-        .catch((e) => console.log(e));
-    }
-  }, [initializeUser, setUsers, token]);
-
   return (
     <div>
       <Navbar />
       <AdminForm handleRegister={ handleRegister } />
-      <AdminUsersTable
+      { currentId && <AdminUsersTable
         users={ users }
         currentId={ currentId }
         handleRemoveUser={ handleRemoveUser }
-      />
+      />}
 
       { fail
         && (
