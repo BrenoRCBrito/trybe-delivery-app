@@ -17,8 +17,7 @@ function AdminUsersTable(props) {
           </tr>
         </thead>
         <tbody>
-          {users.length
-          && users.map(({ id, name, email, role }, i) => {
+          { users.map(({ id, name, email, role }, i) => {
             let type = 'P. Administradora';
             if (role === 'seller') type = 'P. Vendedora';
             if (role === 'customer') type = 'Cliente';
