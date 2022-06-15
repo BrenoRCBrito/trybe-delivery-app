@@ -4,20 +4,21 @@ import PropTypes from 'prop-types';
 function CheckoutTable(props) {
   const { products, handleRemoveItem } = props;
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Valor Unitário</th>
-          <th>Sub-total</th>
-          <th>Remover Item</th>
-        </tr>
-      </thead>
-      <tbody>
-        {products.length
-          && products.map(({ price, name, quantity, id }, i) => {
+    products.length
+    && (
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Sub-total</th>
+            <th>Remover Item</th>
+          </tr>
+        </thead>
+        <tbody>
+          { products.map(({ price, name, quantity, id }, i) => {
             const subTotal = price * quantity;
 
             const priceBR = price.toLocaleString('pt-br', {
@@ -70,8 +71,9 @@ function CheckoutTable(props) {
               </tr>
             );
           })}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    )
   );
 }
 
