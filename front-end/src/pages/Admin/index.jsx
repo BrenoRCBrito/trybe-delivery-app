@@ -8,7 +8,7 @@ import { getUsers, postAdminRegister, deleteUser } from '../../services';
 
 function Admin() {
   const [users, setUsers] = useState([]);
-  const [fail, setFail] = useState('');
+  const [failMessage, setFailMessage] = useState('');
 
   const {
     token,
@@ -36,7 +36,7 @@ function Admin() {
         const { status, data } = response;
         if (status === StatusCodes.CREATED) {
           setUsers([...users, data.user]);
-          setFail('');
+          setFailMessage('');
         }
       })
       .catch((error) => {
@@ -45,14 +45,14 @@ function Admin() {
         // when it rejects with a status code 4xx or 5xx
         const { response: { status, data } } = error;
         if (status === StatusCodes.CONFLICT) {
-          setFail('Usuário já existe');
+          setFailMessage('Usuário já existe');
         } else if (status === StatusCodes.UNAUTHORIZED) {
-          setFail('Revalide seu login');
+          setFailMessage('Revalide seu login');
         } else if (status === StatusCodes.BAD_REQUEST
         || status === StatusCodes.UNPROCESSABLE_ENTITY) {
-          setFail('Campos inválidos');
+          setFailMessage('Campos inválidos');
         } else {
-          setFail('Falha ao cadastrar usuário');
+          setFailMessage('Falha ao cadastrar usuário');
           console.log('Internal server error: received status code: ', status);
         }
         console.log(data);
@@ -64,9 +64,9 @@ function Admin() {
       .then((status) => {
         if (status === StatusCodes.NO_CONTENT || status === StatusCodes.NOT_FOUND) {
           setUsers(users.filter((user) => user.id !== id));
-          setFail('');
+          setFailMessage('');
         } else {
-          setFail('Falha ao apagar o usuário');
+          setFailMessage('Falha ao apagar o usuário');
           console.log('Expected status code to be 204 or 404 but got', status);
         }
       })
@@ -85,12 +85,12 @@ function Admin() {
         handleRemoveUser={ handleRemoveUser }
       />}
 
-      { fail
+      { failMessage
         && (
           <h3
             data-testid="admin_manage__element-invalid-register"
           >
-            { fail }
+            { failMessage }
           </h3>
         ) }
     </div>
