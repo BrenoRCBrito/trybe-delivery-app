@@ -8,7 +8,7 @@ function ProductsList() {
   return (
     <div>
       {
-        products.length > 0 && products.map((product, index) => (
+        products.length && products.map((product, index) => (
           <div key={ index }>
             <ProductCard product={ product } />
           </div>
