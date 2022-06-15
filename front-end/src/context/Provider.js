@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import {
@@ -26,15 +26,9 @@ function Provider({ children }) {
 
   const [orders, setOrders] = useState([]);
 
-  const token = useMemo(() => user.token, [user]);
-
-  const role = useMemo(() => user.role, [user]);
-
-  const count = useRef(0);
+  const goTo = useHistory();
 
   const initializedUser = useRef(false);
-
-  const goTo = useHistory();
 
   const makeLogout = useCallback(() => {
     clearLocalStorage();
@@ -47,8 +41,6 @@ function Provider({ children }) {
 
   const initializeUser = useCallback(() => {
     if (!initializedUser.current) {
-      count.current += 1;
-      console.log('initializeUser', count);
       const userLS = getUserLS();
       if (!userLS && user.id) {
         setUserLS(user);
@@ -106,6 +98,8 @@ function Provider({ children }) {
     setProducts(productsToUpdate);
     synchronizeProducts(productsToUpdate);
   };
+
+  const { token, role } = user;
 
   const context = {
     user,
