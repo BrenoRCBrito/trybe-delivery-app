@@ -79,7 +79,7 @@ function Admin() {
     <div>
       <Navbar />
       <AdminForm handleRegister={ handleRegister } />
-      { currentId && <AdminUsersTable
+      { currentId && users.length && <AdminUsersTable
         users={ users }
         currentId={ currentId }
         handleRemoveUser={ handleRemoveUser }
