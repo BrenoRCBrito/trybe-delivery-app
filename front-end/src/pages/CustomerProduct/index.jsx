@@ -7,36 +7,27 @@ import ProductsList from '../../components/ProductsList/ProductsList';
 
 function CustomerProducts() {
   const {
-    // products,
     token,
     checkout,
     initializeCheckout,
     initializeUser,
-    initializedUser,
   } = useContext(Context);
 
   const goTo = useHistory();
 
-  // const initialized = useMemo(() => products.length !== 0, [products]);
-
   const initializedCheckout = useRef(false);
-  const count = useRef(0);
 
   useEffect(() => {
-    if (!initializedUser.current) initializeUser();
+    initializeUser();
     if (!initializedCheckout.current && token) {
-      count.current += 1;
-      console.log('useEffect CustomerProduct', count);
-      if (!initializedCheckout.current) {
-        getProducts(token)
-          .then((response) => {
-            initializeCheckout(response.products);
-            initializedCheckout.current = true;
-          })
-          .catch((e) => console.log(e));
-      }
+      getProducts(token)
+        .then((response) => {
+          initializeCheckout(response.products);
+          initializedCheckout.current = true;
+        })
+        .catch((e) => console.log(e));
     }
-  }, [initializeCheckout, initializeUser, initializedUser, token]);
+  }, [initializeCheckout, initializeUser, token]);
 
   const { cart: { totalPrice } } = checkout;
 

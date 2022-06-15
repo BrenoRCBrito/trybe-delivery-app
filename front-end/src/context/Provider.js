@@ -46,22 +46,26 @@ function Provider({ children }) {
   }, [goTo]);
 
   const initializeUser = useCallback(() => {
-    count.current += 1;
-    console.log('initializeUser', count);
-    const userLS = getUserLS();
-    if (!userLS && user.id) {
-      setUserLS(user);
-    } else if (userLS && !user.id) {
-      renewToken(userLS.token)
-        .then(({ data }) => {
-          setUser(data);
-          setUserLS(data);
-        })
-        .catch(() => {
-          makeLogout();
-        });
+    if (!initializedUser.current) {
+      count.current += 1;
+      console.log('initializeUser', count);
+      const userLS = getUserLS();
+      if (!userLS && user.id) {
+        setUserLS(user);
+      } else if (userLS && !user.id) {
+        renewToken(userLS.token)
+          .then(({ data }) => {
+            setUser(data);
+            setUserLS(data);
+          })
+          .catch(() => {
+            makeLogout();
+          });
+      } else {
+        makeLogout();
+      }
+      initializedUser.current = true;
     }
-    initializedUser.current = true;
   }, [makeLogout, user]);
 
   const calculateTotalPrice = (array) => {
@@ -107,7 +111,6 @@ function Provider({ children }) {
     user,
     setUser,
     initializeUser,
-    initializedUser,
     checkout,
     setCheckout,
     initializeCheckout,
