@@ -45,7 +45,10 @@ function RegisterForm() {
 
   return (
     <div>
-      <form>
+      <form
+        className={ `flex flex-col w-[26.563rem] h-[31.563rem] items-center
+      bg-[#EAF1EF] border border-[#B1C2BE] justify-evenly shadow-login` }
+      >
         <GenericInput
           data={ inputsDatas.Email }
           value={ userEmail }
@@ -69,6 +72,11 @@ function RegisterForm() {
           data-testid="common_register__button-register"
           disabled={ validateRegister(userEmail, userName, userPassword) }
           onClick={ (event) => handleStatusLogin(event) }
+          className={ `w-[87%] h-[6.35vh] rounded-[10px] bg-[#036B52]
+          text-2xl font-normal text-[#F2FFFC]
+          transition duration-500
+          enabled:hover:bg-transparent enabled:hover:text-[#036B52] enabled:hover:border-2
+          enabled:border-[#036B52] disabled:opacity-30 disabled:bg-[#034b3ac9]` }
         >
           CADASTRAR
         </button>

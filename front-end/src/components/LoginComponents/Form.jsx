@@ -77,12 +77,11 @@ function LoginForm() {
         data-testid="common_login__button-login"
         disabled={ validateLogin(userEmail, userPassword) }
         onClick={ (event) => handleStatusLogin(event) }
-        className={ `w-[23.125rem] h-[3.688rem] rounded-[10px] bg-[#036B52]
+        className={ `w-[87%] h-[6.35vh] rounded-[10px] bg-[#036B52]
         text-2xl font-normal text-[#F2FFFC]
         transition duration-500
         enabled:hover:bg-transparent enabled:hover:text-[#036B52] enabled:hover:border-2
-        enabled:border-[#036B52] disabled:opacity-30 disabled:bg-[#034b3ac9]
-        disabled:cursor-not-allowed` }
+        enabled:border-[#036B52] disabled:opacity-30 disabled:bg-[#034b3ac9]` }
       >
         LOGIN
       </button>
@@ -90,8 +89,11 @@ function LoginForm() {
       <button
         type="submit"
         data-testid="common_login__button-register"
-        onClick={ () => goTo.push('/register') }
-        className={ `w-[23.125rem] h-[3.688rem] rounded-[10px] bg-transparent
+        onClick={ (event) => {
+          event.preventDefault();
+          goTo.push('/register');
+        } }
+        className={ `w-[87%] h-[6.35vh] rounded-[10px] bg-transparent
         text-2xl font-normal text-[#036B52] border-2 border-[#036B52]
         transition duration-500 hover:bg-[#036B52] hover:text-[#F2FFFC]` }
       >

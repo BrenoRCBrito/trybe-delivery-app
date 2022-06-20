@@ -8,14 +8,15 @@ function Navbar() {
   const isCustomerPage = window.location.href.includes('customer');
   const isSellerPage = window.location.href.includes('seller');
   return (
-    <nav>
-      <div>
+    <nav className="flex justify-between h-[8vh] items-center">
+      <div className="flex">
         <Link
           data-testid={
             isCustomerPage
               ? 'customer_products__element-navbar-link-products'
               : 'customer_products__element-navbar-link-orders'
           }
+          className="m-auto"
           to={ () => {
             if (isCustomerPage) return '/customer/products';
             if (isSellerPage) return '/seller/orders';
@@ -31,9 +32,11 @@ function Navbar() {
             data-testid="customer_products__element-navbar-link-orders"
             to="/customer/orders"
           >
-            Meus Pedidos
+            MEUS PEDIDOS
           </Link>
         )}
+      </div>
+      <div className="flex">
         <h3 data-testid="customer_products__element-navbar-user-full-name">
           {user.name}
         </h3>
@@ -45,7 +48,7 @@ function Navbar() {
             goTo.push('/login');
           } }
         >
-          Logout
+          Sair
         </button>
       </div>
     </nav>

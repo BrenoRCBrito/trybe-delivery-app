@@ -5,11 +5,10 @@ function GenericInput(props) {
   const { data, value, handler } = props;
 
   return (
-    <div className="flex flex-col w-[23.188rem] h-[7rem]">
+    <div className="flex flex-col w-[87%] h-[13vh] justify-between">
       <label
         htmlFor={ data.id }
-        className={ `w-[19.875rem] h-[2.625rem] font-normal text-2xl
-        self-center` }
+        className="font-normal text-2xl my-auto ml-3"
       >
         { data.role }
       </label>
@@ -19,8 +18,7 @@ function GenericInput(props) {
         data-testid={ data.testId }
         value={ value }
         onChange={ (event) => handler(event) }
-        className={ `w-[23.188rem] h-[4.375rem] text-2xl font-normal align-middle
-        p-6 border border-[#001813] rounded-[5px]` }
+        className="text-2xl font-normal p-[2.45vh] border border-[#001813] rounded-[5px]"
       />
     </div>
   );

@@ -48,7 +48,7 @@ function CustomerProducts() {
         { !totalPrice ? 'Ver Carrinho' : 'Ver Carrinho: ' }
         <span
           data-testid="customer_products__checkout-bottom-value"
-          className={ !totalPrice && 'hidden' }
+          className={ !totalPrice ? 'hidden' : 'undefined' }
         >
           { totalPriceBR }
         </span>
