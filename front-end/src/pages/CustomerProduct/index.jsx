@@ -42,10 +42,13 @@ function CustomerProducts() {
         data-testid="customer_products__button-cart"
         onClick={ () => goTo.push('/customer/checkout') }
         disabled={ !totalPrice }
+        className={ `fixed bottom-5 right-5 rounded-lg px-3 h-12 bg-[#036B52]
+        transition duration-500 disabled:bg-opacity-40 text-white` }
       >
-        Ver Carrinho:
+        { !totalPrice ? 'Ver Carrinho' : 'Ver Carrinho: ' }
         <span
           data-testid="customer_products__checkout-bottom-value"
+          className={ !totalPrice && 'hidden' }
         >
           { totalPriceBR }
         </span>

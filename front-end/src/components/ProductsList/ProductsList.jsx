@@ -6,14 +6,16 @@ import Context from '../../context/Context';
 function ProductsList() {
   const { products } = useContext(Context);
   return (
-    <div>
-      {
-        products.length > 0 && products.map((product, index) => (
-          <div key={ index }>
-            <ProductCard product={ product } />
-          </div>
-        ))
-      }
+    <div className="flex justify-center">
+      <div className="grid grid-cols-4">
+        {
+          products.length > 0 && products.map((product, index) => (
+            <div key={ index }>
+              <ProductCard product={ product } />
+            </div>
+          ))
+        }
+      </div>
     </div>
   );
 }
