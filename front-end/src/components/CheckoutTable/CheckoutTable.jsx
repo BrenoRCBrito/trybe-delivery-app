@@ -66,7 +66,7 @@ function CheckoutTable(props) {
                 </td>
                 <td
                   className={ `baseTable bg-[#2FC18C]
-                text-white rounded-r-lg` }
+                text-white rounded-r-lg transition duration-300 hover:bg-[#3ca780]` }
                 >
                   <button
                     type="button"

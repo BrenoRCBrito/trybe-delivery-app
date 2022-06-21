@@ -9,7 +9,7 @@ function OrderDetails(props) {
   return (
     <div>
       <Navbar />
-      <h1>Detalhes do Pedido</h1>
+      <h1 className="w-[80%] m-auto">Detalhes do Pedido</h1>
       <OrderDetail data={ data } />
     </div>
   );

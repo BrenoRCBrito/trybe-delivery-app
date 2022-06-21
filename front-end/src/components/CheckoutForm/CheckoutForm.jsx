@@ -66,7 +66,9 @@ function CheckoutForm(props) {
         type="button"
         onClick={ handleSubmit }
         disabled={ !(sellerId && deliveryAddress && deliveryNumber) }
-        className="w-[35%] h-[8.25vh] m-auto mb-4 bg-[#036B52] rounded-[10px] text-white text-4xl"
+        className={ `w-[35%] h-[8.25vh] m-auto mb-4 bg-[#036B52]
+        rounded-[10px] text-white text-4xl disabled:opacity-30 disabled:bg-[#034b3ac9]
+        transition duration-150 hover:bg-[#024f3d]` }
       >
         Finalizar pedido
       </button>

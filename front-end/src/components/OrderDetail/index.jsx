@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Context from '../../context/Context';
 import { getSale, updateSale } from '../../services';
+import './index.css';
 
 function OrderDetail(props) {
   const { token, initializeUser } = useContext(Context);
@@ -40,9 +41,14 @@ function OrderDetail(props) {
   return (
     <div>
       { sale.id && (
-        <div>
-          <div>
-            <p data-testid={ data.id }>{ `PEDIDO 000${sale.id}` }</p>
+        <div
+          className={ `flex flex-col shadow-login w-[80%]
+        m-auto border border-[#B1C2BE] min-h-[85vh]` }
+        >
+          <div className="flex bg-[#EAF1EF] justify-between items-center h-[6vh]">
+            <p data-testid={ data.id } className="font-extrabold ml-3">
+              { `PEDIDO 000${sale.id}` }
+            </p>
             <p data-testid={ data.seller }>{ `P.Vend: ${sale.seller.name}` }</p>
             <p data-testid={ data.date }>
               {moment(sale.saleDate).locale('pt-br').format('DD/MM/YYYY') }
@@ -81,7 +87,7 @@ function OrderDetail(props) {
             )}
           </div>
 
-          <table>
+          <table className="m-5 border-separate border-spacing-y-2 mb-auto">
             <thead>
               <tr>
                 <th>Item</th>
@@ -100,19 +106,35 @@ function OrderDetail(props) {
                 });
                 return (
                   <tr key={ i }>
-                    <td data-testid={ `${data.tItem}${i}` }>
+                    <td
+                      data-testid={ `${data.tItem}${i}` }
+                      className="baseTable bg-[#2FC18C] w-[4vw] rounded-l-lg"
+                    >
                       { i + 1 }
                     </td>
-                    <td data-testid={ `${data.tName}${i}` }>
+                    <td
+                      className="baseTable w-[52.5vw] bg-[#EAF1EF]"
+                      data-testid={ `${data.tName}${i}` }
+                    >
                       { product.name }
                     </td>
-                    <td data-testid={ `${data.tQuantity}${i}` }>
+                    <td
+                      className="baseTable bg-[#036B52] w-[8.69vw] text-white"
+                      data-testid={ `${data.tQuantity}${i}` }
+                    >
                       { product.SaleProduct.quantity }
                     </td>
-                    <td data-testid={ `${data.tPrice}${i}` }>
+                    <td
+                      className="baseTable bg-[#421981] w-[8.69vw] text-white"
+                      data-testid={ `${data.tPrice}${i}` }
+                    >
                       { product.price }
                     </td>
-                    <td data-testid={ `${data.tTotal}${i}` }>
+                    <td
+                      className={ `baseTable bg-[#056CF9] w-[8.69vw]
+                      text-white rounded-r-lg` }
+                      data-testid={ `${data.tTotal}${i}` }
+                    >
                       { subTotalBR }
                     </td>
                   </tr>
@@ -120,7 +142,10 @@ function OrderDetail(props) {
               }) }
             </tbody>
           </table>
-          <div>
+          <div
+            className={ `flex self-end w-[20%] h-[8vh] justify-center
+            items-center bg-[#036B52] m-3 rounded-[10px] text-white text-4xl` }
+          >
             <span>Total: R$ </span>
             <span
               data-testid={ data.total }
