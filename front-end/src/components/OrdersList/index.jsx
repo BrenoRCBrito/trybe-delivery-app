@@ -8,7 +8,7 @@ function Orders(props) {
   const { orders } = useContext(Context);
 
   return (
-    <div className="md:flex md:flex-row md:flex-wrap sm:items-center sm:flex-col">
+    <div className="flex flex-wrap justify-center">
       {orders.length > 0
           && orders.map((sale) => (
             <OrderCard key={ sale.id } sale={ sale } data={ data } />
