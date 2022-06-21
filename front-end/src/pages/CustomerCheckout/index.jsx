@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../../context/Context';
-import { getSellers, postSale } from '../../services';
+import { getUsers, postSale } from '../../services';
 import CheckoutTable from '../../components/CheckoutTable/CheckoutTable';
 import CheckoutForm from '../../components/CheckoutForm/CheckoutForm';
 import {
@@ -37,7 +37,7 @@ function CustomerCheckout() {
   useEffect(() => {
     initializeUser();
     if (token) {
-      getSellers(token)
+      getUsers(token)
         .then((response) => {
           setSellers(response.users);
         })
@@ -74,10 +74,11 @@ function CustomerCheckout() {
       <div className="flex flex-col w-[85%] h-[80%] m-auto">
         <h2 className="text-3xl">Finalizar Pedido</h2>
         <div className="flex flex-col border border-[#B1C2BE] shadow-login mb-7">
-          <CheckoutTable
+          { products.length
+          && <CheckoutTable
             products={ products }
             handleRemoveItem={ handleRemoveItem }
-          />
+          />}
           <div
             className={ `flex self-end w-[20%] h-[8vh] justify-center
           items-center bg-[#036B52] m-3 rounded-[10px] text-white text-4xl` }

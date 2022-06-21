@@ -1,5 +1,12 @@
+require('express-async-errors');
 const express = require('express');
 const cors = require('cors');
+const { config } = require('dotenv');
+
+const notFound = require('../middlewares/notFound');
+const error = require('../middlewares/error');
+const useMorgan = require('../middlewares/useMorgan');
+
 const {
   isAuth,
   login,
@@ -13,10 +20,13 @@ const {
   updateSale,
 } = require('./skeleton');
 
+config();
+
+const app = express();
+
 const { Router, json } = express;
 
 const port = process.env.PORT || 3301;
-const app = require('./app');
 
 const salesRouter = Router();
 const productsRouter = Router();
@@ -44,8 +54,26 @@ salesRouter
   .get('/', getSales)
   .post('/', createSale)
   .patch('/:id', updateSale);
-
+  
 app.use(json(), cors());
+
+app.use(useMorgan);
+
+app.use('/login', loginRouter);
+
+app.use('/register', registerRouter);
+
+app.use('/user', usersRouter);
+
+app.use('/product', productsRouter);
+
+app.use('/sale', salesRouter);
+
+app.use('/images', express.static('./public/images'));
+
+app.use('*', notFound);
+
+app.use(error);
 
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);

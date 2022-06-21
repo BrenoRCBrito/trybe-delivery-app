@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import {
   setUserLS,
@@ -9,6 +10,7 @@ import {
   clearLocalStorage,
   INITIAL_CHECKOUT,
 } from '../services/localStorage';
+import { renewToken } from '../services';
 
 const INITIAL_USER = {
   id: null,
@@ -24,34 +26,46 @@ function Provider({ children }) {
 
   const [orders, setOrders] = useState([]);
 
-  const token = useMemo(() => user.token, [user]);
+  const goTo = useHistory();
 
-  const role = useMemo(() => user.role, [user]);
+  const initializedUser = useRef(false);
 
-  const makeLogout = () => {
+  const makeLogout = useCallback(() => {
     clearLocalStorage();
     setUser(INITIAL_USER);
     setCheckout(INITIAL_CHECKOUT);
     setProducts([]);
     setOrders([]);
-  };
+    goTo.push('/login');
+  }, [goTo]);
 
   const initializeUser = useCallback(() => {
-    const userLS = getUserLS();
-    if (!userLS && user.id) {
-      setUserLS(user);
-    } else if (userLS && !user.id) {
-      // renovar o token com backend
-      setUser(userLS);
+    if (!initializedUser.current) {
+      const userLS = getUserLS();
+      if (!userLS && user.id) {
+        setUserLS(user);
+      } else if (userLS && !user.id) {
+        renewToken(userLS.token)
+          .then(({ data }) => {
+            setUser(data);
+            setUserLS(data);
+          })
+          .catch(() => {
+            makeLogout();
+          });
+      } else {
+        makeLogout();
+      }
+      initializedUser.current = true;
     }
-  }, [user]);
+  }, [makeLogout, user]);
 
   const calculateTotalPrice = (array) => {
     const sum = array.reduce((acc, { price, quantity }) => acc + price * quantity, 0);
     return Math.round(sum * 100) / 100;
   };
 
-  const synchronizeProducts = (productsToSync) => {
+  const synchronizeProducts = useCallback((productsToSync) => {
     const totalPrice = calculateTotalPrice(productsToSync);
     const onlyAddedProducts = productsToSync.filter(({ quantity }) => quantity > 0);
     const updateCheckout = {
@@ -60,9 +74,9 @@ function Provider({ children }) {
     };
     setCheckout(updateCheckout);
     setCheckoutLS(updateCheckout);
-  };
+  }, [checkout.cart]);
 
-  const initializeCheckout = (productsFromFetch) => {
+  const initializeCheckout = useCallback((productsFromFetch) => {
     const productsToSave = productsFromFetch.map((product) => {
       const { price, id, ...rest } = product;
       let quantity = 0;
@@ -75,7 +89,7 @@ function Provider({ children }) {
     });
     setProducts(productsToSave);
     synchronizeProducts(productsToSave);
-  };
+  }, [checkout.products, synchronizeProducts]);
 
   const setQuantity = (id, qtd) => {
     const index = products.findIndex(({ id: productId }) => id === productId);
@@ -84,6 +98,8 @@ function Provider({ children }) {
     setProducts(productsToUpdate);
     synchronizeProducts(productsToUpdate);
   };
+
+  const { token, role } = user;
 
   const context = {
     user,

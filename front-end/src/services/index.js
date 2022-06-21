@@ -68,12 +68,10 @@ function postAdminRegister({
         role: userRole,
       },
       { headers: { Authorization: token } },
-    )
-    .then((res) => res.data)
-    .catch((err) => err.response.status);
+    );
 }
 
-function getSellers(token) {
+function getUsers(token) {
   return axios
     .get(`${URI}/user`, { headers: { Authorization: token } })
     .then((res) => res.data)
@@ -102,6 +100,20 @@ function updateSale(token, saleId, status) {
     .catch((err) => err.response.status);
 }
 
+function deleteUser(token, id) {
+  return axios
+    .delete(`${URI}/user/delete/${id}`, {
+      headers: { Authorization: token },
+    })
+    .then((res) => res.status)
+    .catch((err) => err.response.status);
+}
+
+function renewToken(token) {
+  return axios
+    .get(`${URI}/user/renew`, { headers: { Authorization: token } });
+}
+
 export {
   postAdminRegister,
   postLogin,
@@ -109,7 +121,9 @@ export {
   getProducts,
   getSales,
   getSale,
-  getSellers,
+  getUsers,
   postSale,
   updateSale,
+  deleteUser,
+  renewToken,
 };

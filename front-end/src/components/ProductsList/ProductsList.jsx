@@ -9,7 +9,7 @@ function ProductsList() {
     <div className="flex justify-center">
       <div className="grid grid-cols-4">
         {
-          products.length > 0 && products.map((product, index) => (
+          products.length && products.map((product, index) => (
             <div key={ index }>
               <ProductCard product={ product } />
             </div>
