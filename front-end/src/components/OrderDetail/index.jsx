@@ -43,23 +43,36 @@ function OrderDetail(props) {
       { sale.id && (
         <div
           className={ `flex flex-col shadow-login w-[80%]
-        m-auto border border-[#B1C2BE] min-h-[85vh]` }
+        m-auto border border-[#B1C2BE] min-h-[75vh]` }
         >
           <div className="flex bg-[#EAF1EF] justify-between items-center h-[6vh]">
-            <p data-testid={ data.id } className="font-extrabold ml-3">
+            <p data-testid={ data.id } className="text-2xl font-extrabold mx-5">
               { `PEDIDO 000${sale.id}` }
             </p>
-            <p data-testid={ data.seller }>{ `P.Vend: ${sale.seller.name}` }</p>
-            <p data-testid={ data.date }>
+            <p data-testid={ data.seller } className="text-2xl">
+              { `P.Vend: ${sale.seller.name}` }
+            </p>
+            <p data-testid={ data.date } className="text-2xl font-medium m-auto">
               {moment(sale.saleDate).locale('pt-br').format('DD/MM/YYYY') }
             </p>
-            <p data-testid={ data.status }>{ sale.status }</p>
+            <p
+              data-testid={ data.status }
+              className={ `${sale.status === 'Pendente' ? 'bg-[#CCB800]' : 'undefined'}
+              ${sale.status === 'Em Trânsito' ? 'bg-[#66CC00]' : 'undefined'}
+              ${sale.status === 'Entregue' ? 'bg-[#00CC9B]' : 'undefined'}
+              bg-opacity-75 px-12 py-[0.4rem] rounded-lg text-2xl uppercase font-medium` }
+            >
+              { sale.status }
+            </p>
             { data.role === 'customer' && (
               <button
                 disabled={ sale.status !== inProgress }
                 data-testid={ data.button }
                 onClick={ () => handleSubmit('Entregue') }
                 type="button"
+                className={ `text-lg h-[4.4vh] bg-[#036B52]
+                rounded-lg px-5 mx-5 text-white disabled:opacity-30
+                transition duration-150 enabled:hover:bg-[#035c47]` }
               >
                 MARCAR COMO ENTREGUE
               </button>)}
@@ -72,6 +85,9 @@ function OrderDetail(props) {
                   data-testid={ data.preparingBtn }
                   onClick={ () => handleSubmit('Preparando') }
                   type="button"
+                  className={ `text-lg h-[4.4vh] bg-[#00CC9B]
+                  rounded-lg px-5 ml-5 text-white disabled:opacity-30
+                  transition duration-150 enabled:hover:bg-[#01b98e]` }
                 >
                   PREPARAR PEDIDO
                 </button>
@@ -80,6 +96,9 @@ function OrderDetail(props) {
                   data-testid={ data.dispatchBtn }
                   onClick={ () => handleSubmit(inProgress) }
                   type="button"
+                  className={ `text-lg h-[4.4vh] bg-[#036B52]
+                  rounded-lg px-5 mx-5 text-white disabled:opacity-30
+                  transition duration-150 enabled:hover:bg-[#035c47]` }
                 >
                   SAIU PARA ENTREGA
                 </button>
