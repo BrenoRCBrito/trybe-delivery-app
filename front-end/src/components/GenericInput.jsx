@@ -19,6 +19,7 @@ function GenericInput(props) {
         value={ value }
         onChange={ (event) => handler(event) }
         className="text-2xl font-normal p-[2.45vh] border border-[#001813] rounded-[5px]"
+        // type={ data.role === 'Senha' ? 'password' : 'text' }
       />
     </div>
   );

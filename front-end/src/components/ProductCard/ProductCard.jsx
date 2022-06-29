@@ -10,7 +10,7 @@ function ProductCard(props) {
 
   return (
     <div
-      className="flex flex-col w-[19vw] h-[50vh] m-5 border border-[#B1C2BE] shadow-login"
+      className="flex flex-col w-[15vw] h-[50vh] m-5 border border-[#B1C2BE] shadow-login"
     >
       <div
         className="absolute flex w-[7vw] h-[6vh] justify-center items-center"
@@ -38,14 +38,14 @@ function ProductCard(props) {
           { name }
         </h2>
 
-        <div className="flex">
+        <div className="flex h-[5.5vh] mt-2">
           <button
             data-testid={ `customer_products__button-card-rm-item-${id}` }
             type="button"
             onClick={ () => {
               if (quantity > 0) setQuantity(id, quantity - 1);
             } }
-            className="w-[3.86vw] h-[6.67vh] rounded-l-xl bg-[#036B52] text-white"
+            className="w-[3.86vw] rounded-l-xl bg-[#036B52] text-white transition duration-150 active:bg-[#049775]"
           >
             -
           </button>
@@ -55,14 +55,15 @@ function ProductCard(props) {
             min="0"
             onChange={ ({ target }) => setQuantity(id, +target.value) }
             data-testid={ `customer_products__input-card-quantity-${id}` }
-            className="w-[3.22vw] h-[6.67vh] border border-[#001813] text-center"
+            className={ `${quantity === 0 ? 'text-gray-400' : 'undefined'}
+            w-[3.22vw] border border-[#001813] text-center` }
           />
 
           <button
             data-testid={ `customer_products__button-card-add-item-${id}` }
             type="button"
             onClick={ () => setQuantity(id, quantity + 1) }
-            className="w-[3.86vw] h-[6.67vh] rounded-r-xl bg-[#036B52] text-white"
+            className="w-[3.86vw] rounded-r-xl bg-[#036B52] text-white transition duration-150 active:bg-[#049775]"
           >
             +
           </button>

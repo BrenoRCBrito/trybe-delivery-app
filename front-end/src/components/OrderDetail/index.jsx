@@ -58,7 +58,8 @@ function OrderDetail(props) {
             <p
               data-testid={ data.status }
               className={ `${sale.status === 'Pendente' ? 'bg-[#CCB800]' : 'undefined'}
-              ${sale.status === 'Em Trânsito' ? 'bg-[#66CC00]' : 'undefined'}
+              ${sale.status === 'Preparando' ? 'bg-[#66CC00]' : 'undefined'}
+              ${sale.status === 'Em Trânsito' ? 'bg-[#00CC9B]' : 'undefined'}
               ${sale.status === 'Entregue' ? 'bg-[#00CC9B]' : 'undefined'}
               bg-opacity-75 px-12 py-[0.4rem] rounded-lg text-2xl uppercase font-medium` }
             >
