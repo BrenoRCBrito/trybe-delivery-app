@@ -45,7 +45,8 @@ function ProductCard(props) {
             onClick={ () => {
               if (quantity > 0) setQuantity(id, quantity - 1);
             } }
-            className="w-[3.86vw] rounded-l-xl bg-[#036B52] text-white transition duration-150 active:bg-[#049775]"
+            className={ `w-[3.86vw] rounded-l-xl bg-[#036B52]
+            text-white transition duration-150 active:bg-[#049775]` }
           >
             -
           </button>
@@ -63,7 +64,8 @@ function ProductCard(props) {
             data-testid={ `customer_products__button-card-add-item-${id}` }
             type="button"
             onClick={ () => setQuantity(id, quantity + 1) }
-            className="w-[3.86vw] rounded-r-xl bg-[#036B52] text-white transition duration-150 active:bg-[#049775]"
+            className={ `w-[3.86vw] rounded-r-xl bg-[#036B52]
+            text-white transition duration-150 active:bg-[#049775]` }
           >
             +
           </button>
